@@ -22,6 +22,11 @@
 	stmt = conn.prepareStatement(sql);
 	ResultSet rs = null;
 	rs = stmt.executeQuery();
+	
+	//자원반납
+	rs.close();
+	stmt.close();
+	conn.close();
 %>
 <!DOCTYPE html>
 <html>
@@ -52,7 +57,7 @@
 					<td><%=empName %></td>
 					<td><%=empJob %></td>
 					<td><%=hireDate %></td>
-					<td><%=active %></td>
+					<td><%=active %> <a href="/shop/emp/modifyEmpActive.jsp?empId=<%=empId %>&active=<%=active%>">변경</a></td>
 				</tr>
 		<%
 			}
