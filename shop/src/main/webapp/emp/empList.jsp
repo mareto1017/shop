@@ -35,6 +35,7 @@
 <title>EmpList</title>
 </head>
 <body>
+	<div><a href="/shop/emp/empLogout.jsp">로그아웃</a></div>
 	<h1>사원목록</h1>
 	<table>
 		<tr>
