@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%
-	String loginEmp = (String)session.getAttribute("loginEmp");
-	System.out.println(loginEmp + " <-- loginEmp");
-	if(loginEmp == null){
+	//로그인 인증 분기
+	if(session.getAttribute("loginEmp") == null){
 		response.sendRedirect("/shop/emp/empLoginForm.jsp");
 		return;
 	}

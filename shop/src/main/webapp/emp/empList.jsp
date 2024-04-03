@@ -6,9 +6,7 @@
     pageEncoding="UTF-8"%>
 <%
 	//로그인 인증 분기
-	String loginEmp = (String)session.getAttribute("loginEmp");
-	System.out.println(loginEmp + " <-- loginEmp");
-	if(loginEmp == null){
+	if(session.getAttribute("loginEmp") == null){
 		String errMsg = URLEncoder.encode("잘못된 접근입니다. 로그인 먼저 해주세요", "utf-8");
 		response.sendRedirect("/shop/emp/empLoginForm.jsp?errMsg=" + errMsg);
 		return;
@@ -106,7 +104,17 @@
 					<td><%=(String)(m.get("empName")) %></td>
 					<td><%=(String)(m.get("empJob")) %></td>
 					<td><%=(String)(m.get("hireDate")) %></td>
-					<td><%=(String)(m.get("active")) %> <a href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId")) %>&active=<%=(String)(m.get("active"))%>">변경</a></td>
+					<td>
+						<%=(String)(m.get("active")) %> 
+						<%
+							HashMap<String, Object> sm = (HashMap<String, Object>)(session.getAttribute("loginEmp"));
+							if((Integer)(sm.get("grade")) > 0){
+						%>
+								<a href="/shop/emp/modifyEmpActive.jsp?empId=<%=(String)(m.get("empId")) %>&active=<%=(String)(m.get("active"))%>">변경</a>
+						<%
+							}
+						%>
+					</td>
 				</tr>
 		<%
 			}
