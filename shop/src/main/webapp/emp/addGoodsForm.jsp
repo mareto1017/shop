@@ -66,7 +66,7 @@
 		</div>
 		<div>
 			goodsAmount :
-			<input type="text" name="goodsAmount">
+			<input type="number" name="goodsAmount">
 		</div>
 		<div>
 			goodsContent :
