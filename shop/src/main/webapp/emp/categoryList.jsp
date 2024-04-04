@@ -49,7 +49,7 @@
 	
 	<div>카테고리 리스트</div>
 	<form method="get" action="/shop/emp/categoryList.jsp">
-		<input type="text" name="category" placeholder="카테고리">
+		<input type="text" name="category" placeholder="카테고리" value="<%=category %>">
 		<button type="submit">검색</button>
 	</form>
 	<table>

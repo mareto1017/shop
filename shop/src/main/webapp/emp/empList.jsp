@@ -15,10 +15,16 @@
 %>
 <%
 	String paramEmpName = request.getParameter("empName");
+	String order = request.getParameter("order");
 	System.out.println(paramEmpName + "<-- empList param paramEmpName");
+	System.out.println(order + "<-- empList param order");
 	
 	if(paramEmpName == null){
 		paramEmpName = "";
+	}
+	
+	if(order == null){
+		order = "hire_date";
 	}
 
 	int currentPage = 1;
@@ -32,7 +38,7 @@
 	
 
 	String sql = null;
-	sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp where emp_name like ? order by hire_date desc limit ? , ?";
+	sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp where emp_name like ? order by " + order +" asc limit ? , ?";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	PreparedStatement stmt = null;
@@ -40,6 +46,7 @@
 	stmt.setString(1, "%" + paramEmpName + "%");
 	stmt.setInt(2, startRow);
 	stmt.setInt(3, rowPerPage);
+	System.out.println(stmt);
 	ResultSet rs = null;
 	rs = stmt.executeQuery();
 	ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
@@ -63,8 +70,10 @@
 	}
 	
 	String sql2 = null;
-	sql2 = "select count(*) cnt from emp";
+	sql2 = "select count(*) cnt from emp where emp_name like ? ";
 	PreparedStatement stmt2 = conn.prepareStatement(sql2);
+	stmt2.setString(1, paramEmpName);
+	System.out.println(stmt2);
 	ResultSet rs2 = stmt2.executeQuery();
 	
 	int count = 0;
@@ -99,9 +108,18 @@
 	
 	<div>
 		<form method="get" action="/shop/emp/empList.jsp">
-			<input type="text" name="empName" placeholder="사원 이름">
+			<input type="text" name="empName" placeholder="사원 이름" value="<%=paramEmpName%>">
 			<button type="submit">검색</button>
 		</form>
+	</div>
+	
+	<div>
+		<a href="/shop/emp/empList.jsp?order=emp_id&empName=<%=paramEmpName%>">아이디</a>
+		<a href="/shop/emp/empList.jsp?order=grade&empName=<%=paramEmpName%>">레벨</a>
+		<a href="/shop/emp/empList.jsp?order=emp_name&empName=<%=paramEmpName%>">이름</a>
+		<a href="/shop/emp/empList.jsp?order=emp_job&empName=<%=paramEmpName%>">직업</a>
+		<a href="/shop/emp/empList.jsp?order=active&empName=<%=paramEmpName%>">액티브</a>
+		<a href="/shop/emp/empList.jsp?order=hire_date&empName=<%=paramEmpName%>">입사일</a>
 	</div>
 	
 	<table>
@@ -138,23 +156,17 @@
 	</table>
 	
 	<%
-		if(currentPage > 1 && currentPage < lastPage){
+		if(currentPage < lastPage){
 	%>
-			
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=1">처음</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage - 1 %>">이전</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage + 1 %>">다음</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage %>">마지막</a>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage + 1 %>&order=<%=order %>&empName=<%=paramEmpName%>">다음</a>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage %>&order=<%=order %>&empName=<%=paramEmpName%>">마지막</a>
 	<%
-		} else if(currentPage == 1){
+		}
+	
+		if(currentPage > 1){
 	%>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage + 1 %>">다음</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage %>">마지막</a>
-	<%
-		} else {
-	%>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=1">처음</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage - 1 %>">이전</a>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=1&order=<%=order %>&empName=<%=paramEmpName%>">처음</a>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage - 1 %>&order=<%=order %>&empName=<%=paramEmpName%>">이전</a>
 	<%
 		}
 	%>

@@ -25,20 +25,27 @@
 	
 	String category = request.getParameter("category");
 	String goodsTitle = request.getParameter("goodsTitle");
+	String order = request.getParameter("order");
 	System.out.println(category + "<-- goodsList param category");
 	System.out.println(goodsTitle + "<-- goodsList param goodsTitle");
+	System.out.println(order + "<-- goodsList param order");
 	
 	if(goodsTitle == null){
 		goodsTitle = "";
 	}
 	
+	if(order == null){
+		order = "create_date";
+	}
 	
 	String sql = null;
-	sql = "select category, count(*) cnt from goods group by category order by category";
+	sql = "select category, count(*) cnt from goods where goods_title like ? group by category order by category";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	PreparedStatement stmt = null;
 	stmt = conn.prepareStatement(sql);
+	stmt.setString(1, "%" + goodsTitle + "%");
+	System.out.println(stmt);
 	ResultSet rs = null;
 	rs = stmt.executeQuery();
 	ArrayList<HashMap<String, Object>> categoryList = new ArrayList<HashMap<String, Object>>();
@@ -75,7 +82,7 @@
 	if(category == null || category.equals("null")){
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
 				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods where goods_title like ? order by goods_no desc limit ?, ?";
+				"update_date updateDate, create_date createDate from goods where goods_title like ? order by " + order  + " desc limit ?, ?";
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, "%" + goodsTitle + "%");
 		stmt2.setInt(2, startRow);
@@ -84,7 +91,7 @@
 	} else {
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
 				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods where category ? and goods_title like = ? order by goods_no desc limit ?, ?";
+				"update_date updateDate, create_date createDate from goods where category = ? and goods_title like ? order by " + order  + " desc limit ?, ?";
 		
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, category);
@@ -128,7 +135,7 @@
 	
 	<div>
 		<form method="get" action="/shop/emp/goodsList.jsp">
-			<input type="text" name="goodsTitle" placeholder="상품 이름">
+			<input type="text" name="goodsTitle" placeholder="상품 이름" value="<%=goodsTitle %>">
 			<button type="submit">검색</button>
 		</form>
 	</div>
@@ -138,17 +145,23 @@
 	</div>
 	
 	<div>
-		<a href="/shop/emp/goodsList.jsp">전체</a>
+		<a href="/shop/emp/goodsList.jsp?order=<%=order %>&goodsTitle=<%=goodsTitle %>">전체</a>
 		<%
 			for(HashMap m : categoryList) {
 		%>
-				<a href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category")) %>">
+				<a href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category")) %>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">
 					<%=(String)(m.get("category")) %>
 					(<%=(Integer)(m.get("cnt")) %>)
 				</a>
 		<%
 			}
 		%>
+	</div>
+	
+	<div>
+		<a href="/shop/emp/goodsList.jsp?order=goods_title&category=<%=category%>&goodsTitle=<%=goodsTitle %>">이름순</a>
+		<a href="/shop/emp/goodsList.jsp?order=goods_price&category=<%=category%>&goodsTitle=<%=goodsTitle %>">가격순</a>
+		<a href="/shop/emp/goodsList.jsp?order=create_date&category=<%=category%>&goodsTitle=<%=goodsTitle %>">최신순</a>
 	</div>
 	
 	<div>
@@ -186,23 +199,17 @@
 	
 	<div>
 		<%
-			if(currentPage > 1 && currentPage < lastPage){
+			if(currentPage < lastPage){
 		%>
-				
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>">처음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>">이전</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>">다음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>">마지막</a>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a>
 		<%
-			} else if(currentPage == 1){
+			} 
+			
+			if(currentPage > 1){
 		%>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>">다음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>">마지막</a>
-		<%
-			} else {
-		%>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>">처음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>">이전</a>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
 		<%
 			}
 		%>
