@@ -12,13 +12,19 @@
 	}
 %>
 <%
-	
-	String sql = "select category,  create_date createDate from category;";
+	String category = request.getParameter("category");	
+	System.out.println(category + "<-- categoryList param category");
+	if(category == null){
+		category = "";
+	}
+
+	String sql = "select category,  create_date createDate from category where category like ?;";
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	PreparedStatement stmt = null;
 	stmt = conn.prepareStatement(sql);
+	stmt.setString(1, "%" + category + "%");
 	ResultSet rs = stmt.executeQuery();
 	
 	ArrayList<HashMap<String, String>> categoryList = new ArrayList<>();
@@ -29,6 +35,7 @@
 		
 		categoryList.add(m);
 	}
+	
 	
 %>
 <!DOCTYPE html>
@@ -41,7 +48,10 @@
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
 	<div>카테고리 리스트</div>
-	
+	<form method="get" action="/shop/emp/categoryList.jsp">
+		<input type="text" name="category" placeholder="카테고리">
+		<button type="submit">검색</button>
+	</form>
 	<table>
 		<tr>
 			<th>카테고리</th>

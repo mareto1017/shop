@@ -24,9 +24,13 @@
 	int startRow = (currentPage - 1) * 10;
 	
 	String category = request.getParameter("category");
-	System.out.println(category + "<-- goodsList category");
+	String goodsTitle = request.getParameter("goodsTitle");
+	System.out.println(category + "<-- goodsList param category");
+	System.out.println(goodsTitle + "<-- goodsList param goodsTitle");
 	
-	
+	if(goodsTitle == null){
+		goodsTitle = "";
+	}
 	
 	
 	String sql = null;
@@ -71,20 +75,22 @@
 	if(category == null || category.equals("null")){
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
 				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods order by goods_no desc limit ?, ?";
+				"update_date updateDate, create_date createDate from goods where goods_title like ? order by goods_no desc limit ?, ?";
 		stmt2 = conn.prepareStatement(sql2);
-		stmt2.setInt(1, startRow);
-		stmt2.setInt(2, rowPerPage);
+		stmt2.setString(1, "%" + goodsTitle + "%");
+		stmt2.setInt(2, startRow);
+		stmt2.setInt(3, rowPerPage);
 		System.out.println(stmt2);
 	} else {
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
 				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods where category = ? order by goods_no desc limit ?, ?";
+				"update_date updateDate, create_date createDate from goods where category ? and goods_title like = ? order by goods_no desc limit ?, ?";
 		
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, category);
-		stmt2.setInt(2, startRow);
-		stmt2.setInt(3, rowPerPage);
+		stmt2.setString(2, "%" + goodsTitle + "%");
+		stmt2.setInt(3, startRow);
+		stmt2.setInt(4, rowPerPage);
 		System.out.println(stmt2);
 	}
 	
@@ -119,6 +125,13 @@
 </head>
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
+	
+	<div>
+		<form method="get" action="/shop/emp/goodsList.jsp">
+			<input type="text" name="goodsTitle" placeholder="상품 이름">
+			<button type="submit">검색</button>
+		</form>
+	</div>
 	
 	<div>
 		<a href="/shop/emp/addGoodsForm.jsp">상품등록</a>

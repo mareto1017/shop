@@ -14,6 +14,12 @@
 	
 %>
 <%
+	String paramEmpName = request.getParameter("empName");
+	System.out.println(paramEmpName + "<-- empList param paramEmpName");
+	
+	if(paramEmpName == null){
+		paramEmpName = "";
+	}
 
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null){
@@ -26,13 +32,14 @@
 	
 
 	String sql = null;
-	sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp order by hire_date desc limit ? , ?";
+	sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp where emp_name like ? order by hire_date desc limit ? , ?";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
 	PreparedStatement stmt = null;
 	stmt = conn.prepareStatement(sql);
-	stmt.setInt(1, startRow);
-	stmt.setInt(2, rowPerPage);
+	stmt.setString(1, "%" + paramEmpName + "%");
+	stmt.setInt(2, startRow);
+	stmt.setInt(3, rowPerPage);
 	ResultSet rs = null;
 	rs = stmt.executeQuery();
 	ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
@@ -89,6 +96,14 @@
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
 	<h1>사원목록</h1>
+	
+	<div>
+		<form method="get" action="/shop/emp/empList.jsp">
+			<input type="text" name="empName" placeholder="사원 이름">
+			<button type="submit">검색</button>
+		</form>
+	</div>
+	
 	<table>
 		<tr>
 			<th>empId</th>
