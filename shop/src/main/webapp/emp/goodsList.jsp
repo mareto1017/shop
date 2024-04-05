@@ -80,18 +80,16 @@
 	String sql2 = null;
 	PreparedStatement stmt2 = null;
 	if(category == null || category.equals("null")){
-		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-				"goodsTitle, file_name filename, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods where goods_title like ? order by " + order  + " desc limit ?, ?";
+		sql2 = "select goods_no goodsNo, goods_title goodsTitle, file_name filename, goods_price goodsPrice" + 
+				" from goods where goods_title like ? order by " + order  + " desc limit ?, ?";
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, "%" + goodsTitle + "%");
 		stmt2.setInt(2, startRow);
 		stmt2.setInt(3, rowPerPage);
 		System.out.println(stmt2);
 	} else {
-		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-				"goodsTitle, file_name, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-				"update_date updateDate, create_date createDate from goods where category = ? and goods_title like ? order by " + order  + " desc limit ?, ?";
+		sql2 = "select goods_no goodsNo, goods_title goodsTitle, file_name filename, goods_price goodsPrice" + 
+				" from goods where category = ? and goods_title like ? order by " + order  + " desc limit ?, ?";
 		
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, category);
@@ -108,17 +106,11 @@
 	ArrayList<HashMap<String, Object>> goodsList = new ArrayList<HashMap<String, Object>>();
 	
 	while(rs2.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();		
+		HashMap<String, Object> m = new HashMap<String, Object>();
 		m.put("goodsNo", rs2.getInt("goodsNo"));
-		m.put("category", rs2.getString("category"));
-		m.put("empId", rs2.getString("empId"));
 		m.put("goodsTitle", rs2.getString("goodsTitle"));
 		m.put("filename", rs2.getString("filename"));
-		m.put("goodsContent", rs2.getString("goodsContent"));
 		m.put("goodsPrice", rs2.getInt("goodsPrice"));
-		m.put("goodsAmount", rs2.getInt("goodsAmount"));
-		m.put("updateDate", rs2.getString("updateDate"));
-		m.put("createDate", rs2.getString("createDate"));
 		
 		goodsList.add(m);
 		
@@ -166,38 +158,27 @@
 	</div>
 	
 	<div>
-		<table border="1">
-			<tr>
-				<th>상품 번호</th>
-				<th>카테고리</th>
-				<th>사원 아이디</th>
-				<th>상품 이름</th>
-				<th>상품 사진</th>
-				<th>상품 내용</th>
-				<th>상품 가격</th>
-				<th>상품 재고</th>
-				<th>수정 날짜</th>
-				<th>생성 날짜</th>
-			</tr>
+		<ul>
 			<%
 				for(HashMap m : goodsList) {
 			%>
-					<tr>
-						<td><%=(Integer)(m.get("goodsNo")) %></td>
-						<td><%=(String)(m.get("category")) %></td>
-						<td><%=(String)(m.get("empId")) %></td>
-						<td><%=(String)(m.get("goodsTitle")) %></td>
-						<td><img src="../upload/<%=(String)(m.get("filename")) %>" width="100px" height="100px"></td>
-						<td><%=(String)(m.get("goodsContent")) %></td>
-						<td><%=(Integer)(m.get("goodsPrice")) %></td>
-						<td><%=(Integer)(m.get("goodsAmount")) %></td>
-						<td><%=(String)(m.get("updateDate")) %></td>
-						<td><%=(String)(m.get("createDate")) %></td>
-					</tr>
+					<li>
+						<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+							<img src="../upload/<%=(String)(m.get("filename")) %>" width="100px" height="100px">
+						</a>
+					</li>
+					<li>
+						<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+							<%=(String)(m.get("goodsTitle")) %>
+						</a>
+					</li>
+					<li>
+						<%=(Integer)(m.get("goodsPrice")) %>
+					</li>
 			<%
 				}
 			%>
-		</table>
+		</ul>
 	</div>
 	
 	<div>
