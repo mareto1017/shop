@@ -81,7 +81,7 @@
 	PreparedStatement stmt2 = null;
 	if(category == null || category.equals("null")){
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
+				"goodsTitle, file_name filename, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
 				"update_date updateDate, create_date createDate from goods where goods_title like ? order by " + order  + " desc limit ?, ?";
 		stmt2 = conn.prepareStatement(sql2);
 		stmt2.setString(1, "%" + goodsTitle + "%");
@@ -90,7 +90,7 @@
 		System.out.println(stmt2);
 	} else {
 		sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-				"goodsTitle, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
+				"goodsTitle, file_name, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
 				"update_date updateDate, create_date createDate from goods where category = ? and goods_title like ? order by " + order  + " desc limit ?, ?";
 		
 		stmt2 = conn.prepareStatement(sql2);
@@ -113,6 +113,7 @@
 		m.put("category", rs2.getString("category"));
 		m.put("empId", rs2.getString("empId"));
 		m.put("goodsTitle", rs2.getString("goodsTitle"));
+		m.put("filename", rs2.getString("filename"));
 		m.put("goodsContent", rs2.getString("goodsContent"));
 		m.put("goodsPrice", rs2.getInt("goodsPrice"));
 		m.put("goodsAmount", rs2.getInt("goodsAmount"));
@@ -171,6 +172,7 @@
 				<th>카테고리</th>
 				<th>사원 아이디</th>
 				<th>상품 이름</th>
+				<th>상품 사진</th>
 				<th>상품 내용</th>
 				<th>상품 가격</th>
 				<th>상품 재고</th>
@@ -185,6 +187,7 @@
 						<td><%=(String)(m.get("category")) %></td>
 						<td><%=(String)(m.get("empId")) %></td>
 						<td><%=(String)(m.get("goodsTitle")) %></td>
+						<td><img src="../upload/<%=(String)(m.get("filename")) %>" width="100px" height="100px"></td>
 						<td><%=(String)(m.get("goodsContent")) %></td>
 						<td><%=(Integer)(m.get("goodsPrice")) %></td>
 						<td><%=(Integer)(m.get("goodsAmount")) %></td>
@@ -199,19 +202,18 @@
 	
 	<div>
 		<%
+				if(currentPage > 1){
+		%>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
+				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
+		<%
+			}
 			if(currentPage < lastPage){
 		%>
 				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a>
 				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a>
 		<%
 			} 
-			
-			if(currentPage > 1){
-		%>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
-		<%
-			}
 		%>
 	</div>
 </body>

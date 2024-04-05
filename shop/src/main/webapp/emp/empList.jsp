@@ -156,17 +156,16 @@
 	</table>
 	
 	<%
-		if(currentPage < lastPage){
-	%>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage + 1 %>&order=<%=order %>&empName=<%=paramEmpName%>">다음</a>
-			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage %>&order=<%=order %>&empName=<%=paramEmpName%>">마지막</a>
-	<%
-		}
-	
 		if(currentPage > 1){
 	%>
 			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=1&order=<%=order %>&empName=<%=paramEmpName%>">처음</a>
 			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage - 1 %>&order=<%=order %>&empName=<%=paramEmpName%>">이전</a>
+	<%
+			}
+		if(currentPage < lastPage){
+	%>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=currentPage + 1 %>&order=<%=order %>&empName=<%=paramEmpName%>">다음</a>
+			  	<a class="page-link" href="/shop/emp/empList.jsp?currentPage=<%=lastPage %>&order=<%=order %>&empName=<%=paramEmpName%>">마지막</a>
 	<%
 		}
 	%>
