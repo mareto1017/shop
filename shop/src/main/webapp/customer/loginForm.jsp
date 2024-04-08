@@ -3,11 +3,10 @@
     pageEncoding="UTF-8"%>
 <%
 	//로그인 인증 분기
-	if(session.getAttribute("loginEmp") != null){
-		response.sendRedirect("/shop/emp/empList.jsp");
+	if(session.getAttribute("loginCustomer") != null){
+		response.sendRedirect("/shop/customer/goodsList.jsp");
 		return;
 	}
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -16,9 +15,9 @@
 <title>EmpLoginForm</title>
 </head>
 <body>
-	<form method="post" action="empLoginAction.jsp">
-		id : <input type="text" name="empId">
-		pw : <input type="password" name="empPw">
+	<form method="post" action="loginAction.jsp">
+		Email : <input type="email" name="customerEmail">
+		Pw : <input type="password" name="customerPw">
 		<button type="submit">login</button>
 	</form>
 </body>
