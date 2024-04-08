@@ -122,6 +122,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/shop/css/goods.css">
 </head>
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
@@ -158,22 +159,22 @@
 	</div>
 	
 	<div>
-		<ul>
+		<ul class="goodsList">
 			<%
 				for(HashMap m : goodsList) {
 			%>
-					<li>
-						<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-							<img src="../upload/<%=(String)(m.get("filename")) %>" width="100px" height="100px">
-						</a>
-					</li>
-					<li>
-						<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-							<%=(String)(m.get("goodsTitle")) %>
-						</a>
-					</li>
-					<li>
-						<%=(Integer)(m.get("goodsPrice")) %>
+					<li class="goods">
+						<div class="goodsImg">
+							<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+								<img src="../upload/<%=(String)(m.get("filename")) %>">
+							</a>
+						</div>
+						<div class="goodsInfo">
+							<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+								<%=(String)(m.get("goodsTitle")) %>
+							</a>
+							<p><%=(Integer)(m.get("goodsPrice")) %></p>
+						</div>
 					</li>
 			<%
 				}
@@ -183,7 +184,7 @@
 	
 	<div>
 		<%
-				if(currentPage > 1){
+			if(currentPage > 1){
 		%>
 				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
 				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
