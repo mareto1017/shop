@@ -1,3 +1,4 @@
+<%@page import="shop.dao.EmpDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -23,17 +24,7 @@
 		active = "ON";
 	}
 	
-	String sql = null;
-	sql = "update emp set active = ? where emp_id = ?";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, active);
-	stmt.setString(2, empId);
-	System.out.println(stmt);
-	int row = 0;
-	row = stmt.executeUpdate();
+	int row = EmpDAO.updateEmp(active, empId);
 	
 	if(row == 1){
 		//변경 성공

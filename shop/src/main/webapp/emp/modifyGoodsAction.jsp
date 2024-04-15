@@ -1,3 +1,4 @@
+<%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="java.io.*"%>
 <%@ page import="java.sql.*" %>
@@ -47,34 +48,7 @@
 
 	System.out.println(filename + "<-- modifyGoodsAction filename");
 	
-	String sql = null;
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	if(filename == null){
-		sql = "update goods set category = ?, goods_title = ?, goods_price = ?, goods_amount = ?, goods_content = ? where goods_no = ?";
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, category);
-		stmt.setString(2, goodsTitle);
-		stmt.setInt(3, goodsPrice);
-		stmt.setInt(4, goodsAmount);
-		stmt.setString(5, goodsContent);
-		stmt.setInt(6, goodsNo);
-		
-	} else {
-		sql = "update goods set category = ?, goods_title = ?, file_name = ?, goods_price = ?, goods_amount = ?, goods_content = ? where goods_no = ?";
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, category);
-		stmt.setString(2, goodsTitle);
-		stmt.setString(3, filename);
-		stmt.setInt(4, goodsPrice);
-		stmt.setInt(5, goodsAmount);
-		stmt.setString(6, goodsContent);
-		stmt.setInt(7, goodsNo);
-	}
-	System.out.println(stmt);
-	int row = 0;
-	row = stmt.executeUpdate();
+	int row = GoodsDAO.updateGoods(filename, category, goodsTitle, goodsPrice, goodsAmount, goodsContent, goodsNo);
 	
 	if(row == 1){
 		//변경 성공

@@ -1,3 +1,4 @@
+<%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.net.URLEncoder"%>
@@ -14,19 +15,7 @@
 	
 %>
 <%
-	String sql = null;
-	sql = "select category from goods group by category";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	ResultSet rs = null;
-	rs = stmt.executeQuery();
-	ArrayList<String> categoryList = new ArrayList<String>();
-	
-	while(rs.next()){
-		categoryList.add(rs.getString("category"));
-	}
+	ArrayList<String> categoryList = GoodsDAO.selcetCategoryList();
 	
 	System.out.println(categoryList);
 %>

@@ -1,3 +1,4 @@
+<%@page import="shop.dao.CategoryDAO"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,17 +16,7 @@
 	String category = request.getParameter("category");
 	System.out.println(category + "<--addCateogoryAction param cateogory");	
 
-	String sql = "insert into category (category) values (?)";
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, category);
-	System.out.println(stmt);
-	
-	int row = 0;
-	row = stmt.executeUpdate();
+	int row = CategoryDAO.insertCategory(category);
 	
 	if(row == 1){
 		//추가 성공

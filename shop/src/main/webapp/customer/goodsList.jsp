@@ -1,3 +1,4 @@
+<%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.net.URLEncoder"%>
@@ -36,26 +37,8 @@
 		order = "create_date";
 	}
 	
-	String sql = null;
-	sql = "select category, count(*) cnt from goods where goods_title like ? group by category order by category";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, "%" + goodsTitle + "%");
-	System.out.println(stmt);
-	ResultSet rs = null;
-	rs = stmt.executeQuery();
-	ArrayList<HashMap<String, Object>> categoryList = new ArrayList<HashMap<String, Object>>();
-	
-	while(rs.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();		
-		m.put("category", rs.getString("category"));
-		m.put("cnt", rs.getInt("cnt"));
-		
-		categoryList.add(m);
-		
-	}
+
+	ArrayList<HashMap<String, Object>> categoryList = GoodsDAO.selectGoodsCount(goodsTitle);
 	
 	int lastPage = 0;
 	int cnt = 0;
@@ -75,44 +58,9 @@
 		lastPage = cnt / rowPerPage + 1;
 	}
 	
-	String sql2 = null;
-	PreparedStatement stmt2 = null;
-	if(category == null || category.equals("null")){
-		sql2 = "select goods_no goodsNo, goods_title goodsTitle, file_name filename, goods_price goodsPrice" + 
-				" from goods where goods_title like ? order by " + order  + " desc limit ?, ?";
-		stmt2 = conn.prepareStatement(sql2);
-		stmt2.setString(1, "%" + goodsTitle + "%");
-		stmt2.setInt(2, startRow);
-		stmt2.setInt(3, rowPerPage);
-		System.out.println(stmt2);
-	} else {
-		sql2 = "select goods_no goodsNo, goods_title goodsTitle, file_name filename, goods_price goodsPrice" + 
-				" from goods where category = ? and goods_title like ? order by " + order  + " desc limit ?, ?";
-		
-		stmt2 = conn.prepareStatement(sql2);
-		stmt2.setString(1, category);
-		stmt2.setString(2, "%" + goodsTitle + "%");
-		stmt2.setInt(3, startRow);
-		stmt2.setInt(4, rowPerPage);
-		System.out.println(stmt2);
-	}
-	
-	
-	ResultSet rs2 = null;
-	rs2 = stmt2.executeQuery();
-	
-	ArrayList<HashMap<String, Object>> goodsList = new ArrayList<HashMap<String, Object>>();
-	
-	while(rs2.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();
-		m.put("goodsNo", rs2.getInt("goodsNo"));
-		m.put("goodsTitle", rs2.getString("goodsTitle"));
-		m.put("filename", rs2.getString("filename"));
-		m.put("goodsPrice", rs2.getInt("goodsPrice"));
-		
-		goodsList.add(m);
-		
-	}
+
+	ArrayList<HashMap<String, Object>> goodsList = GoodsDAO.selectGoodsList(category, goodsTitle, order, startRow, rowPerPage);
+
 	
 %>
 <!DOCTYPE html>

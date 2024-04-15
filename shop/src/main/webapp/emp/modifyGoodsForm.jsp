@@ -1,3 +1,5 @@
+<%@page import="shop.dao.CategoryDAO"%>
+<%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.net.URLEncoder"%>
@@ -14,19 +16,7 @@
 	
 %>
 <%
-	String sql = null;
-	sql = "select category from goods group by category";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	ResultSet rs = null;
-	rs = stmt.executeQuery();
-	ArrayList<String> categoryList = new ArrayList<String>();
-	
-	while(rs.next()){
-		categoryList.add(rs.getString("category"));
-	}
+	ArrayList<String> categoryList = GoodsDAO.selcetCategoryList();
 
 	System.out.println(categoryList);
 
@@ -34,32 +24,7 @@
 	
 	System.out.println(goodsNo + "<-- modifyGoodsForm param goodsNo");
 	
-	String sql2 = null;
-	sql2 = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-			"goodsTitle, file_name filename, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-			"update_date updateDate, create_date createDate from goods where goods_no = ?";
-
-	PreparedStatement stmt2 = null;
-	stmt2 = conn.prepareStatement(sql2);
-	stmt2.setInt(1, goodsNo);
-	System.out.println(stmt2);
-	ResultSet rs2 = null;
-	rs2 = stmt2.executeQuery();
-	
-	HashMap<String, Object> m = new HashMap<>();
-	if(rs2.next()){
-		
-		m.put("goodsNo", rs2.getInt("goodsNo"));
-		m.put("category", rs2.getString("category"));
-		m.put("empId", rs2.getString("empId"));
-		m.put("goodsTitle", rs2.getString("goodsTitle"));
-		m.put("filename", rs2.getString("filename"));
-		m.put("goodsContent", rs2.getString("goodsContent"));
-		m.put("goodsPrice", rs2.getInt("goodsPrice"));
-		m.put("goodsAmount", rs2.getInt("goodsAmount"));
-		m.put("updateDate", rs2.getString("updateDate"));
-		m.put("createDate", rs2.getString("createDate"));
-	}
+	HashMap<String, Object> m = GoodsDAO.selectGoods(goodsNo);
 	
 	System.out.println((String)(m.get("category")));
 %>

@@ -21,5 +21,7 @@
 		pw : <input type="password" name="empPw">
 		<button type="submit">login</button>
 	</form>
+	
+	<a href="/shop/emp/addEmpForm.jsp">회원가입</a>
 </body>
 </html>

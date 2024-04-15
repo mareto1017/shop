@@ -1,3 +1,4 @@
+<%@page import="shop.dao.CategoryDAO"%>
 <%@page import="java.util.*"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.sql.*"%>
@@ -17,25 +18,9 @@
 	if(category == null){
 		category = "";
 	}
+	
+	ArrayList<HashMap<String, String>> categoryList = CategoryDAO.selectCategoryList(category);
 
-	String sql = "select category,  create_date createDate from category where category like ?;";
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, "%" + category + "%");
-	ResultSet rs = stmt.executeQuery();
-	
-	ArrayList<HashMap<String, String>> categoryList = new ArrayList<>();
-	while(rs.next()){
-		HashMap<String, String> m = new HashMap<>();
-		m.put("category", rs.getString("category"));
-		m.put("createDate", rs.getString("createDate"));
-		
-		categoryList.add(m);
-	}
-	
 	
 %>
 <!DOCTYPE html>

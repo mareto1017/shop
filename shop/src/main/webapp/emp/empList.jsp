@@ -1,3 +1,4 @@
+<%@page import="shop.dao.EmpDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.net.URLEncoder"%>
@@ -36,50 +37,9 @@
 	int rowPerPage = 10;
 	int startRow = (currentPage - 1) * 10;
 	
-
-	String sql = null;
-	sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp where emp_name like ? order by " + order +" asc limit ? , ?";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, "%" + paramEmpName + "%");
-	stmt.setInt(2, startRow);
-	stmt.setInt(3, rowPerPage);
-	System.out.println(stmt);
-	ResultSet rs = null;
-	rs = stmt.executeQuery();
-	ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+	ArrayList<HashMap<String, Object>> list = EmpDAO.selectEmpList(order, paramEmpName, startRow, rowPerPage);
 	
-	while(rs.next()){
-		HashMap<String, Object> m = new HashMap<String, Object>();
-		String empId = rs.getString("empId");
-		String empName = rs.getString("empName");
-		String empJob = rs.getString("empJob");
-		String hireDate = rs.getString("hireDate");
-		String active = rs.getString("active");
-		
-		m.put("empId", empId);
-		m.put("empName", empName);
-		m.put("empJob", empJob);
-		m.put("hireDate", hireDate);
-		m.put("active", active);
-		
-		list.add(m);
-		
-	}
-	
-	String sql2 = null;
-	sql2 = "select count(*) cnt from emp where emp_name like ? ";
-	PreparedStatement stmt2 = conn.prepareStatement(sql2);
-	stmt2.setString(1, paramEmpName);
-	System.out.println(stmt2);
-	ResultSet rs2 = stmt2.executeQuery();
-	
-	int count = 0;
-	if(rs2.next()){
-		 count = rs2.getInt("cnt");
-	}
+	int count = EmpDAO.selectEmpCount(paramEmpName);
 	
 	int lastPage = 0;
 	if(count % rowPerPage == 0){
@@ -88,12 +48,6 @@
 		lastPage = count / rowPerPage + 1;
 	}
 	
-	//자원반납
-	rs.close();
-	stmt.close();
-	rs2.close();
-	stmt2.close();
-	conn.close();
 %>
 <!DOCTYPE html>
 <html>

@@ -1,3 +1,4 @@
+<%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page import="java.sql.*" %>
 <%@page import="java.util.*"%>
@@ -17,33 +18,7 @@
 
 	System.out.println(goodsNo + "<-- goodsOne param goodsNo");
 	
-	String sql = null;
-	sql = "select goods_no goodsNo, category, emp_id empId, goods_title " + 
-			"goodsTitle, file_name filename, goods_content goodsContent, goods_price goodsPrice, goods_amount goodsAmount, " + 
-			"update_date updateDate, create_date createDate from goods where goods_no = ?";
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/shop", "root", "java1234");
-	PreparedStatement stmt = null;
-	stmt = conn.prepareStatement(sql);
-	stmt.setInt(1, goodsNo);
-	ResultSet rs = null;
-	rs = stmt.executeQuery();
-	
-	HashMap<String, Object> m = new HashMap<>();
-	if(rs.next()){
-		
-		m.put("goodsNo", rs.getInt("goodsNo"));
-		//m.put("category", rs.getString("category")); 안쓰이고있음
-		m.put("empId", rs.getString("empId"));
-		m.put("goodsTitle", rs.getString("goodsTitle"));
-		m.put("filename", rs.getString("filename"));
-		m.put("goodsContent", rs.getString("goodsContent"));
-		m.put("goodsPrice", rs.getInt("goodsPrice"));
-		m.put("goodsAmount", rs.getInt("goodsAmount"));
-		m.put("updateDate", rs.getString("updateDate"));
-		m.put("createDate", rs.getString("createDate"));
-	}
+	HashMap<String, Object> m = GoodsDAO.selectGoods(goodsNo);
 %>
 <!DOCTYPE html>
 <html>
