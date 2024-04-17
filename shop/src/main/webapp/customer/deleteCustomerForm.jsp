@@ -14,6 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	<h1>회원탈퇴</h1>
 	<form method="post"	action="deleteCustomerAction.jsp">
 		Pw : <input type="password" name="pw">

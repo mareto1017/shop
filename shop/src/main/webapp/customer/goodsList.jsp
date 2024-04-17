@@ -71,6 +71,7 @@
 <link rel="stylesheet" href="/shop/css/goods.css">
 </head>
 <body>
+	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	
 	<div>
 		<form method="get" action="/shop/customer/goodsList.jsp">
@@ -139,6 +140,10 @@
 		<%
 			} 
 		%>
+	</div>
+	
+	<div>
+		<a href="/shop/customer/logout.jsp">로그아웃</a>
 	</div>
 </body>
 </html>

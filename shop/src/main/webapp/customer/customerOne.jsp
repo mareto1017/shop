@@ -19,6 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	<div>
 		Email : <%=loginCustomer.get("customerEmail")%>
 	</div>
