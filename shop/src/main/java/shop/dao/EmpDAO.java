@@ -36,7 +36,7 @@ public class EmpDAO {
 	public static int updateEmp(String active, String empId) throws Exception{
 		
 		String sql = null;
-		sql = "update emp set active = ? where emp_id = ?";
+		sql = "update emp set active = ? update_date = now() where emp_id = ?";
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;
 		stmt = conn.prepareStatement(sql);

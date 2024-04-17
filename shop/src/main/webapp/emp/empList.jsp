@@ -12,7 +12,6 @@
 		response.sendRedirect("/shop/emp/empLoginForm.jsp?errMsg=" + errMsg);
 		return;
 	}
-	
 %>
 <%
 	String paramEmpName = request.getParameter("empName");

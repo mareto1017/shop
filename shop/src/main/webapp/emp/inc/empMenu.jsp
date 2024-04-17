@@ -9,6 +9,7 @@
 	<a href="/shop/emp/categoryList.jsp">카테고리관리</a>
 	<a href="/shop/emp/goodsList.jsp">상품관리</a>
 	<a href="/shop/emp/customerList.jsp">회원관리</a>
+	<a href="/shop/emp/ordersList.jsp">주문관리</a>
 	<a href="/shop/emp/empLogout.jsp">로그아웃</a>
 	<span>
 		<a href="/shop/emp/empOne.jsp">

@@ -6,6 +6,10 @@ import java.util.*;
 import shop.DBHelper;
 
 public class GoodsDAO {
+	public static void main(String[] args) throws Exception {
+		//System.out.println(GoodsDAO.updateGoodsAmount(1, 1));
+	}
+	
 	public static ArrayList<HashMap<String, Object>> selectGoodsList(String category, String goodsTitle, String order, int startRow, int rowPerPage) throws Exception {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		
@@ -115,7 +119,7 @@ public class GoodsDAO {
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;
 		if(filename == null){
-			sql = "update goods set category = ?, goods_title = ?, goods_price = ?, goods_amount = ?, goods_content = ? where goods_no = ?";
+			sql = "update goods set category = ?, goods_title = ?, goods_price = ?, goods_amount = ?, goods_content = ? update_date = now() where goods_no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, category);
 			stmt.setString(2, goodsTitle);
@@ -125,7 +129,7 @@ public class GoodsDAO {
 			stmt.setInt(6, goodsNo);
 			
 		} else {
-			sql = "update goods set category = ?, goods_title = ?, file_name = ?, goods_price = ?, goods_amount = ?, goods_content = ? where goods_no = ?";
+			sql = "update goods set category = ?, goods_title = ?, file_name = ?, goods_price = ?, goods_amount = ?, goods_content = ? update_date = now() where goods_no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, category);
 			stmt.setString(2, goodsTitle);
@@ -186,6 +190,21 @@ public class GoodsDAO {
 			System.out.println(stmt);
 		}
 		
+		int row = 0;
+		row = stmt.executeUpdate();
+		
+		return row;
+	}
+	
+	public static int updateGoodsAmount(int goodsNo, int amount) throws Exception {
+		String sql = null;
+		sql = "update goods set goods_amount = goods_amount + ?  update_date = now() where goods_no = ?";
+		Connection conn = DBHelper.getConnection();
+		PreparedStatement stmt = null;
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, amount);
+		stmt.setInt(2, goodsNo);
+		System.out.println(stmt);
 		int row = 0;
 		row = stmt.executeUpdate();
 		

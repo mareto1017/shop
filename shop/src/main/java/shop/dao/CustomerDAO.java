@@ -93,7 +93,7 @@ public class CustomerDAO {
 	}
 	
 	public static int updateCustomerPw(String mail, String oldPw, String newPw) throws Exception{
-		String sql = "update customer set pw = password(?) where mail = ? and pw = password(?)";
+		String sql = "update customer set pw = password(?) update_date = now() where mail = ? and pw = password(?)";
 		
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;
@@ -111,7 +111,6 @@ public class CustomerDAO {
 	
 	public static ArrayList<HashMap<String, Object>> selectCustomerList(String order, String mail, int startRow, int rowPerPage) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		
 		
 		String sql = null;
 		sql = "select mail, pw, name, birth, gender from customer where mail like ? order by " + order + " asc limit ? , ?";
