@@ -198,12 +198,13 @@ public class GoodsDAO {
 	
 	public static int updateGoodsAmount(int goodsNo, int amount) throws Exception {
 		String sql = null;
-		sql = "update goods set goods_amount = goods_amount + ?  update_date = now() where goods_no = ?";
+		sql = "update goods set goods_amount = goods_amount - ?,  update_date = now() where goods_no = ? and goods_amount > ?";
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, amount);
 		stmt.setInt(2, goodsNo);
+		stmt.setInt(3, goodsNo - 1);
 		System.out.println(stmt);
 		int row = 0;
 		row = stmt.executeUpdate();

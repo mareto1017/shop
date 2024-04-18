@@ -43,7 +43,14 @@
 	</div>
 	
 	<div>
-		<a href="/shop/customer/.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>"">주문</a>
+		<form method="post" action="/shop/customer/addOrders.jsp?">
+			수량 <input type="number" name="amount">
+			주소 <input type="text" name="address">
+			<input type="hidden" name="goodsPrice" value="<%=(Integer)(m.get("goodsPrice")) %>">
+			<input type="hidden" name="goodsNo" value="<%=goodsNo%>">
+
+			<button type="submit">주문</button>
+		</form>
 	</div>
 </body>
 </html>
