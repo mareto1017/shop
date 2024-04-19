@@ -20,8 +20,9 @@
 	
 	System.out.println(goodsNo + "<-- addOrders param goodsNo");
 	System.out.println(amount + "<-- addOrders param amount");
+	System.out.println(price + "<-- addOrders param price");
 	System.out.println(address + "<-- addOrders param address");
-	System.out.println(mail + "<-- addOrders param mail");
+	System.out.println(mail + "<-- addOrders mail");
 	
 	int row = GoodsDAO.updateGoodsAmount(goodsNo, amount);
 	if(row == 1){
