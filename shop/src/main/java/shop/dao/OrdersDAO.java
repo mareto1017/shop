@@ -174,4 +174,19 @@ public class OrdersDAO {
 		return m;
 	}
 	
+	public static int deleteOrders(int ordersNo) throws Exception {
+		int row = 0;
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String sql = null;
+		sql = "delete from orders where orders_no = ? ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, ordersNo);
+		System.out.println(stmt);
+		row = stmt.executeUpdate();
+		
+		return row;
+	}
+	
 }

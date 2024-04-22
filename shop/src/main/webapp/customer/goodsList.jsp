@@ -141,9 +141,5 @@
 			} 
 		%>
 	</div>
-	
-	<div>
-		<a href="/shop/customer/logout.jsp">로그아웃</a>
-	</div>
 </body>
 </html>

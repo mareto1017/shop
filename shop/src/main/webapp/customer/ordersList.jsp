@@ -1,3 +1,4 @@
+<%@page import="shop.dao.ReviewDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shop.dao.OrdersDAO"%>
@@ -33,6 +34,7 @@
 	
 	ArrayList<HashMap<String, Object>> ordersList = OrdersDAO.selectOrdersListByCustomer(mail, startRow, rowPerPage);
 	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -41,6 +43,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
+	
 	<h1>주문 내역</h1>
 	<table border="1">
 		<tr>
@@ -53,6 +57,7 @@
 		</tr>
 		<%
 			for(HashMap<String, Object> m : ordersList){
+				boolean write = ReviewDAO.selectReview((Integer)(m.get("ordersNo")));
 		%>
 				<tr>
 					<td><%=(String)(m.get("goodsTitle")) %></td>
@@ -61,13 +66,23 @@
 					<td><%=(Integer)(m.get("totalPrice")) %></td>
 					<td><%=(String)(m.get("createDate")) %></td>
 					<td><%=(String)(m.get("state")) %></td>
+					<td>
 		<%
-					if(((String)(m.get("state"))).equals("배송완료")){
+					if(((String)(m.get("state"))).equals("배송완료") && write == true){
 		%>
-						<td><a href="/shop/customer/addReviewForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>">리뷰 작성</a></td>
+						<a href="/shop/customer/addReviewForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>">리뷰 작성</a>
+		<%
+					} else if(((String)(m.get("state"))).equals("접수")){
+		%>
+						<a href="/shop/customer/deleteOrders.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>&amount=<%=(Integer)(m.get("totalAmount")) %>&goodsNo=<%=(Integer)(m.get("goodsNo")) %>">주문 취소</a>
+		<%
+					} else if(((String)(m.get("state"))).equals("배송완료") && write == false){
+		%>
+						<div><a href="/shop/customer/deleteReview.jsp?ordersNo=<%=m.get("ordersNo")%>">리뷰 삭제</a></div>
 		<%
 					}
 		%>
+					</td>
 
 		<%
 			}

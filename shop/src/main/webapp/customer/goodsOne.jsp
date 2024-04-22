@@ -1,3 +1,4 @@
+<%@page import="shop.dao.ReviewDAO"%>
 <%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,7 +15,9 @@
 
 	System.out.println(goodsNo + "<-- goodsOne param goodsNo");
 	
-	HashMap<String, Object> m = GoodsDAO.selectGoods(goodsNo);
+	HashMap<String, Object> goods = GoodsDAO.selectGoods(goodsNo);
+	
+	ArrayList<HashMap<String, Object>> reviewList = ReviewDAO.selectReviewList(goodsNo);
 %>
 <!DOCTYPE html>
 <html>
@@ -27,17 +30,17 @@
 	
 	<div>
 		<div>
-			<img src="../upload/<%=(String)(m.get("filename")) %>" width="300px" height="300px">
+			<img src="../upload/<%=(String)(goods.get("filename")) %>" width="300px" height="300px">
 		</div>
 		<div>
 			<div>
-				상품 이름 : <%=(String)(m.get("goodsTitle")) %>
+				상품 이름 : <%=(String)(goods.get("goodsTitle")) %>
 			</div>
 			<div>
-				상품 가격 : <%=(Integer)(m.get("goodsPrice")) %>
+				상품 가격 : <%=(Integer)(goods.get("goodsPrice")) %>
 			</div>
 			<div>
-				상품 내용 : <%=(String)(m.get("goodsContent")) %>
+				상품 내용 : <%=(String)(goods.get("goodsContent")) %>
 			</div>
 		</div>
 	</div>
@@ -46,11 +49,25 @@
 		<form method="post" action="/shop/customer/addOrders.jsp?">
 			수량 <input type="number" name="amount">
 			주소 <input type="text" name="address">
-			<input type="hidden" name="goodsPrice" value="<%=(Integer)(m.get("goodsPrice")) %>">
+			<input type="hidden" name="goodsPrice" value="<%=(Integer)(goods.get("goodsPrice")) %>">
 			<input type="hidden" name="goodsNo" value="<%=goodsNo%>">
 
 			<button type="submit">주문</button>
 		</form>
+	</div>
+	
+	<div>
+		<div>상품후기</div>
+		<%
+			for(HashMap m : reviewList){
+		%>
+				<div>
+					<div><%=m.get("score") %></div>
+					<div><%=m.get("content") %></div>
+				</div>
+		<%
+			}
+		%>
 	</div>
 </body>
 </html>
