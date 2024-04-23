@@ -13,6 +13,9 @@ public class ReviewDAO {
 		//System.out.println(ReviewDAO.insertReview(1, 1, "테스트"));
 	}
 	
+	// 리뷰 작성
+	// 파라미터 : ordersNo, score, content
+	// 파라미터 값들을 review테이블에 입력, 성공 1 실패 0 반환(int)
 	public static int insertReview(int ordersNo, int score, String content) throws Exception {
 		int row = 0;
 		Connection conn = DBHelper.getConnection();
@@ -29,6 +32,9 @@ public class ReviewDAO {
 		return row;
 	}
 	
+	// 리뷰 목록
+	// 파라미터 : goodsNo
+	// goodsNo가 같은 orders들을 반환(ArrayList<HashMap<String, Object>>)
 	public static ArrayList<HashMap<String, Object>> selectReviewList(int goodsNo)throws Exception {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 		
@@ -58,6 +64,9 @@ public class ReviewDAO {
 		
 	}
 	
+	// 리뷰 검색
+	// 파라미터 : ordesNo
+	// ordersNo가 같은 review가 있는지 확인, 있으면 false, 없으면 true를 반환(boolean)
 	public static boolean selectReview(int ordersNo) throws Exception {
 		boolean reuslt = true;
 		
@@ -77,6 +86,9 @@ public class ReviewDAO {
 		return reuslt;
 	}
 	
+	// 리뷰 삭제
+	// 파라미터 : ordersNo
+	// ordersNo가 같은 review를 삭제, 성공 1 실패 0 반환(int)
 	public static int deleteReivew(int ordersNo) throws Exception {
 		int row = 0;
 		

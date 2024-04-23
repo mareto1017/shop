@@ -6,6 +6,7 @@ import java.util.*;
 import shop.DBHelper;
 
 public class CategoryDAO {
+	// 카테고리 검색 값 받아서 그 값이 포함된 카테고리 리스트를 반환 
 	public static ArrayList<HashMap<String, String>> selectCategoryList(String category) throws Exception{
 		String sql = "select category,  create_date createDate from category where category like ?;";
 		
@@ -27,6 +28,7 @@ public class CategoryDAO {
 		return categoryList;
 	}
 	
+	// category 값을 받아서 DB에 입력후, 입력이 되었으면 1, 아니면 0을 반환
 	public static int insertCategory(String category) throws Exception {
 		String sql = "insert into category (category) values (?)";
 		

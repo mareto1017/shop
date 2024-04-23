@@ -13,6 +13,9 @@ public class OrdersDAO {
 		
 	}
 	
+	// 고객의 주문 목록
+	// 파라미터 : mail, startRow, rowPerPage
+	// 파라미터 값과 mail이 같은 orders를 startRow부터 rowPerPage만큼 반환(ArrayList<HashMap<String, Object>>)
 	public static ArrayList<HashMap<String, Object>> selectOrdersListByCustomer(String mail, int startRow, int rowPerPage) throws Exception {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		
@@ -56,6 +59,9 @@ public class OrdersDAO {
 		return list;
 	}
 	
+	// 주문 목록
+	// 파라미터 : startRow, rowPerPage
+	// orders를 startRow부터 rowPerPage만큼 반환(ArrayList<HashMap<String, Object>>)
 	public static ArrayList<HashMap<String, Object>> selectOrdersList(int startRow, int rowPerPage) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		
@@ -97,6 +103,9 @@ public class OrdersDAO {
 		return list;
 	}
 	
+	// 상품 주문
+	// 파라미터 : mail, amount, price, address
+	// 파라미터 값을 orders 테이블에 입력, 성공 1 실패 0 반환(int)
 	public static int insertOrders(String mail, int goodsNo, int amount, int price, String address) throws Exception {
 		String sql = null;
 		sql = "insert into orders(mail, goods_no, total_amount, total_price, address) values(?, ?, ?, ?, ?);";
@@ -115,6 +124,9 @@ public class OrdersDAO {
 		return row;
 	}
 	
+	// 주문 상태 수정
+	// 파라미터 : ordersNo, state
+	// ordersNO가 같은 orders의 state를 변경, 성공 1 실패 0 반환(int)
 	public static int updateOrdersState(int ordersNo, String state) throws Exception {
 		
 		String sql = null;
@@ -131,6 +143,9 @@ public class OrdersDAO {
 		return row;
 	}
 	
+	// 주문 수량
+	// 파라미터 : 없음
+	// 주문의 총 수량 반환(int)
 	public static int selectOrdersCount() throws Exception {
 		String sql = null;
 		sql = "select count(*) cnt from orders";
@@ -147,6 +162,9 @@ public class OrdersDAO {
 		return count;
 	}
 	
+	// 주문 상세
+	// 파라미터 : ordesNo
+	// ordersNO가 같은 orders를 반환(HashMap<String, Object>)
 	public static HashMap<String, Object> selectOrders(int ordersNo) throws Exception {
 		String sql = null;
 		sql = "select orders_no ordersNo, mail, goods_no goodsNo, total_amount totalAmount, total_price totalPrice, address, state, update_date updateDate, create_date createDate "
@@ -174,6 +192,9 @@ public class OrdersDAO {
 		return m;
 	}
 	
+	// 주문 취소
+	// 파라미터 : ordersNo
+	// ordersNo가 같은 orders를 삭제, 성공 1 실패 0 반환(int)
 	public static int deleteOrders(int ordersNo) throws Exception {
 		int row = 0;
 		

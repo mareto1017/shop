@@ -11,6 +11,9 @@ public class CustomerDAO {
 		//System.out.println(CustomerDAO.selectCustomerList("mail", "", 0, 10));
 	}
 	
+	// 고객 로그인
+	// 파라미터 : mail, pw
+	// mail과 pw 값이 같은 customer를 반환(HashMap)
 	public static HashMap<String, Object> selectCustomer(String mail, String pw) throws Exception{
 		String sql = null;
 		sql = "select mail, pw, name, birth, gender from customer where mail =? and pw = password(?)";
@@ -38,6 +41,9 @@ public class CustomerDAO {
 		return loginCustomer;
 	}
 	
+	// 고객 이메일 중복 체크
+	// 파라미터 : mail
+	// mail 값이 같은 customer가 있는지 확인후, 있으면 X 없으면 O 반환(String)
 	public static String selectCustomerMail(String mail) throws Exception{
 		String sql = null;
 		sql = "select mail, pw, name, birth, gender from customer where mail =?";
@@ -58,6 +64,9 @@ public class CustomerDAO {
 		return check;
 	}
 	
+	// 고객 회원가입
+	// 파라미터 : mail, pw, name, birth, gender
+	// 받은 값들을 DB에 입력후, 입력이 되었으면 1, 아니면 0 반환(int)
 	public static int insertCustomer(String mail, String pw, String name, String birth, String gender) throws Exception {
 		String sql = "insert into customer (mail, pw, name, birth, gender) values (?, password(?), ?, ?, ?)";
 		
@@ -76,6 +85,9 @@ public class CustomerDAO {
 		return row;
 	}
 	
+	// 고객 회원 탈퇴
+	// 파라미터 : mail, pw 
+	// mail과 pw 값이 같은 customer를 삭제, 삭제 성공하면 1, 실패하면 0 반환(int)
 	public static int deleteCustomer(String mail, String pw) throws Exception {
 		
 		String sql = "delete from customer where mail = ? and pw = password(?)";
@@ -92,6 +104,9 @@ public class CustomerDAO {
 		return row;
 	}
 	
+	// 고객 비밀번호 수정
+	// 파라미터로 mail, oldPw, newPw
+	// mail과 oldPw(pw) 같은 customer의 pw를 newPw로 변경, 성공시 1, 실패시 0 반환(int)
 	public static int updateCustomerPw(String mail, String oldPw, String newPw) throws Exception{
 		String sql = "update customer set pw = password(?) update_date = now() where mail = ? and pw = password(?)";
 		
@@ -109,6 +124,9 @@ public class CustomerDAO {
 		return row;
 	}
 	
+	// 고객 목록
+	// 파라미터 : order(정렬), mail(검색 값), startRow, rowPerPage
+	// customer를 startRow부터 rowPerPage 만큼 반환(ArrayList<HashMap<String, Object>>)
 	public static ArrayList<HashMap<String, Object>> selectCustomerList(String order, String mail, int startRow, int rowPerPage) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		
@@ -146,6 +164,9 @@ public class CustomerDAO {
 		return list;
 	}
 	
+	// 고객 수
+	// 파라미터 : paramCustomerMail(검색 값)
+	// paramCustomerMail가 mail에 포함된 customer의 숫자를 반환(int)
 	public static int selectCustomerCount(String paramCustomerMail)throws Exception {
 		String sql = null;
 		sql = "select count(*) cnt from customer where mail like ? ";

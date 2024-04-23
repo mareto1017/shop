@@ -10,7 +10,9 @@ public class EmpDAO {
     // HashMap<String, Object> : null이면 로그인실패, 아니면 성공
 	// String empId, String empPw : 로그인폼에서 사용자가 입력한 id/pw
    
-	// 호출코드 HashMap<String, Object> m = EmpDAO.empLogin("admin", "1234");
+	// Emp 로그인
+	// 파라미터 : empId, empPw
+	// empId, empPw가 같은 Emp를 반환(HashMap)
 	public static HashMap<String, Object> selectEmp(String empId, String empPw)
                                        throws Exception {
 		HashMap<String, Object> resultMap = null;
@@ -33,6 +35,9 @@ public class EmpDAO {
 		return resultMap;
    }
 	
+	// Emp active 수정
+	// 파라미터 : active, empId
+	// empId가 같은 emp의 active 값을 파라미터로 받은 active로 변경, 성공 1, 실패 0 반환(int)
 	public static int updateEmp(String active, String empId) throws Exception{
 		
 		String sql = null;
@@ -49,6 +54,9 @@ public class EmpDAO {
 		return row;
 	}
 	
+	// emp 목록
+	// 파라미터 : order(정렬), paramEmpName(검색 값), startRow, rowPerPage
+	// emp를 startRow부터 rowPerPage 만큼 반환(ArrayList<HashMap<String, Object>>)
 	public static ArrayList<HashMap<String, Object>> selectEmpList(String order, String paramEmpName, int startRow, int rowPerPage) throws Exception {
 		String sql = null;
 		sql = "select emp_id empId, emp_name empName, emp_job empJob,  hire_date hireDate, active from emp where emp_name like ? order by " + order +" asc limit ? , ?";
@@ -84,6 +92,9 @@ public class EmpDAO {
 		return list;
 	}
 	
+	// 고객 수
+	// 파라미터 : paramEmpName(검색 값)
+	// paramEmpName가 empName에 포함된 emp의 숫자를 반환(int)
 	public static int selectEmpCount(String paramEmpName)throws Exception {
 		String sql = null;
 		sql = "select count(*) cnt from emp where emp_name like ? ";
@@ -101,6 +112,9 @@ public class EmpDAO {
 		return count;
 	}
 	
+	// emp 회원가입
+	// 파라미터 : empId, empPw, empName, empJob, hireDate
+	// 파라미터 값들을 DB에 입력, 입력 성공 1, 실패 0 반환(int)
 	public static int insertEmp(String empId, String empPw, String empName, String empJob, String hireDate) throws Exception {
 		String sql = "insert into emp (emp_id, emp_pw, emp_name, emp_job, hire_date) values (?, password(?), ?, ?, ?)";
 		
