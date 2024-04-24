@@ -52,7 +52,6 @@ public class OrdersDAO {
 			m.put("createDate", rs.getString("createDate"));
 			m.put("goodsTitle", rs.getString("goodsTitle"));
 			m.put("goodsPrice", rs.getInt("goodsPrice"));
-			m.put("goodsTitle", rs.getString("goodsTitle"));
 			
 			list.add(m);
 		}
