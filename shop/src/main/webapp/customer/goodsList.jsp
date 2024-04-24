@@ -19,7 +19,7 @@
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
 	System.out.println(currentPage + "<-- goodsList currentPage");
-	int rowPerPage = 10;
+	int rowPerPage = 12;
 	int startRow = (currentPage - 1) * 10;
 	
 	String category = request.getParameter("category");
@@ -77,57 +77,78 @@
 <body>
 	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	
-	<div>
-		<form method="get" action="/shop/customer/goodsList.jsp">
-			<input type="text" name="goodsTitle" placeholder="상품 이름" value="<%=goodsTitle %>">
-			<button type="submit">검색</button>
-		</form>
-	</div>
+	<!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Shop in style</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                </div>
+            </div>
+        </header>
 	
 	
-	<div>
-		<a href="/shop/customer/goodsList.jsp?order=<%=order %>&goodsTitle=<%=goodsTitle %>">전체</a>
-		<%
-			for(HashMap m : categoryList) {
-		%>
-				<a href="/shop/customer/goodsList.jsp?category=<%=(String)(m.get("category")) %>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">
-					<%=(String)(m.get("category")) %>
-					(<%=(Integer)(m.get("cnt")) %>)
-				</a>
-		<%
-			}
-		%>
-	</div>
 	
-	<div>
-		<a href="/shop/customer/goodsList.jsp?order=goods_title&category=<%=category%>&goodsTitle=<%=goodsTitle %>">이름순</a>
-		<a href="/shop/customer/goodsList.jsp?order=goods_price&category=<%=category%>&goodsTitle=<%=goodsTitle %>">가격순</a>
-		<a href="/shop/customer/goodsList.jsp?order=create_date&category=<%=category%>&goodsTitle=<%=goodsTitle %>">최신순</a>
-	</div>
-	
-	<div>
-		<ul class="goodsList">
-			<%
-				for(HashMap m : goodsList) {
-			%>
-					<li class="goods">
-						<div class="goodsImg">
-							<a href="/shop/customer/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-								<img src="../upload/<%=(String)(m.get("filename")) %>">
-							</a>
+	<section class="py-5">
+    	<div class="container px-4 px-lg-5 mt-5">
+	    	<div>
+				<form method="get" action="/shop/customer/goodsList.jsp">
+					<input type="text" name="goodsTitle" placeholder="상품 이름" value="<%=goodsTitle %>">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			
+			
+			<div>
+				<a href="/shop/customer/goodsList.jsp?order=<%=order %>&goodsTitle=<%=goodsTitle %>">전체</a>
+				<%
+					for(HashMap m : categoryList) {
+				%>
+						<a href="/shop/customer/goodsList.jsp?category=<%=(String)(m.get("category")) %>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">
+							<%=(String)(m.get("category")) %>
+							(<%=(Integer)(m.get("cnt")) %>)
+						</a>
+				<%
+					}
+				%>
+			</div>
+		
+			<div>
+				<a href="/shop/customer/goodsList.jsp?order=goods_title&category=<%=category%>&goodsTitle=<%=goodsTitle %>">이름순</a>
+				<a href="/shop/customer/goodsList.jsp?order=goods_price&category=<%=category%>&goodsTitle=<%=goodsTitle %>">가격순</a>
+				<a href="/shop/customer/goodsList.jsp?order=create_date&category=<%=category%>&goodsTitle=<%=goodsTitle %>">최신순</a>
+			</div>
+    		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+				<%
+					for(HashMap m : goodsList) {
+				%>
+						<div class="col mb-5">
+							<div class="card h-100">
+		                            <!-- Product image-->
+		                            <a href="/shop/customer/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+		                            	<img class="card-img-top img-fluid" src="../upload/<%=(String)(m.get("filename")) %>">
+		                           	</a>
+		                            <!-- Product details-->
+		                            <div class="card-body p-4">
+		                                <div class="text-center">
+		                                    <!-- Product name-->
+		                                    <h5 class="fw-bolder">
+		                                    	<a href="/shop/customer/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+													<%=(String)(m.get("goodsTitle")) %>
+												</a>
+											</h5>
+		                                    <!-- Product price-->
+		                                    <p><%=(Integer)(m.get("goodsPrice")) %></p>
+		                                </div>
+		                            </div>
+							</div>
 						</div>
-						<div class="goodsInfo">
-							<a href="/shop/customer/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-								<%=(String)(m.get("goodsTitle")) %>
-							</a>
-							<p><%=(Integer)(m.get("goodsPrice")) %></p>
-						</div>
-					</li>
-			<%
-				}
-			%>
-		</ul>
-	</div>
+				<%
+					}
+				%>
+			</div>
+		</div>
+	</section>
 	
 	<div>
 		<%
