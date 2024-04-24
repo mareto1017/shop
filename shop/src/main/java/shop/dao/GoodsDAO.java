@@ -130,7 +130,7 @@ public class GoodsDAO {
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;
 		if(filename == null){
-			sql = "update goods set category = ?, goods_title = ?, goods_price = ?, goods_amount = ?, goods_content = ? update_date = now() where goods_no = ?";
+			sql = "update goods set category = ?, goods_title = ?, goods_price = ?, goods_amount = ?, goods_content = ?, update_date = now() where goods_no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, category);
 			stmt.setString(2, goodsTitle);
@@ -140,7 +140,7 @@ public class GoodsDAO {
 			stmt.setInt(6, goodsNo);
 			
 		} else {
-			sql = "update goods set category = ?, goods_title = ?, file_name = ?, goods_price = ?, goods_amount = ?, goods_content = ? update_date = now() where goods_no = ?";
+			sql = "update goods set category = ?, goods_title = ?, file_name = ?, goods_price = ?, goods_amount = ?, goods_content = ?, update_date = now() where goods_no = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, category);
 			stmt.setString(2, goodsTitle);

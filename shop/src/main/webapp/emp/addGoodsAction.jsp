@@ -1,3 +1,6 @@
+<%@page import="java.awt.Graphics2D"%>
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.awt.image.BufferedImage"%>
 <%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="java.io.OutputStream"%>
@@ -59,12 +62,22 @@
 		System.out.println("입력성공");
 		if(filename != null){
 			InputStream is = part.getInputStream();
-			String filePath = request.getServletContext().getRealPath("upload");
-			File f = new File(filePath, filename);
-			OutputStream os = Files.newOutputStream(f.toPath());
-			is.transferTo(os);
 			
-			os.close();
+			//이미지 크기 조정
+			BufferedImage originalImage = ImageIO.read(is);
+        	int targetWidth = 300;
+        	int targetHeight = 300;
+        
+        	BufferedImage resizedImage = new BufferedImage(targetHeight, targetHeight, originalImage.getType());
+        	Graphics2D g = resizedImage.createGraphics();
+        	g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        	g.dispose();
+
+        	// 조정된 이미지를 저장
+        	String filePath = request.getServletContext().getRealPath("upload");
+        	File f = new File(filePath, filename);
+        	ImageIO.write(resizedImage, "png", f);
+			
 			is.close();
 		}
 	} else {
