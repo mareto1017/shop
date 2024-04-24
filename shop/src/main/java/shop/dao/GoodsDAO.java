@@ -220,11 +220,11 @@ public class GoodsDAO {
 		PreparedStatement stmt = null;
 		// 파라미터 amount가 0이상이면 주문이므로 상품의 수량이 amount보다 많아야됨. 0미만일 경우 주문 취소이므로 상품의 수량은 상관없음 
 		if(amount > 0) {
-			sql = "update goods set goods_amount = goods_amount - ?,  update_date = now() where goods_no = ? and goods_amount > ?";
+			sql = "update goods set goods_amount = goods_amount - ?,  update_date = now() where goods_no = ? and goods_amount >= ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, amount);
 			stmt.setInt(2, goodsNo);
-			stmt.setInt(3, goodsNo - 1);
+			stmt.setInt(3, amount);
 			System.out.println(stmt);
 		} else {
 			sql = "update goods set goods_amount = goods_amount - ?,  update_date = now() where goods_no = ?";
