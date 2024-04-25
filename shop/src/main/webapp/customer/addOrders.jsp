@@ -28,7 +28,7 @@
 	if(row == 1){
 		//상품 수량 수정 성공
 		System.out.println("상품 수량 수정 성공");
-		row = OrdersDAO.insertOrders(mail, goodsNo, amount, price, address);
+		row = OrdersDAO.insertOrders(mail, goodsNo, amount, amount * price, address);
 		if(row == 1){
 			//입력 성공
 			System.out.println("입력 성공");

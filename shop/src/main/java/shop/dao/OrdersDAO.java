@@ -22,7 +22,7 @@ public class OrdersDAO {
 		String sql = null;
 		sql = "select o.orders_no ordersNo, o.goods_no goodsNo, o.mail mail, o.total_amount totalAmount, o.total_price totalPrice,"
 				+ "o.address address, o.state state, o.update_date updateDate, o.create_date createDate, "
-				+ "g.goods_title goodsTitle, g.category category, g.goods_price goodsPrice "
+				+ "g.goods_title goodsTitle, g.category category, g.goods_price goodsPrice, g.file_name fileName "
 				+ "from orders o inner join goods g "
 				+ "on o.goods_no = g.goods_no "
 				+ "where o.mail = ? "
@@ -52,6 +52,7 @@ public class OrdersDAO {
 			m.put("createDate", rs.getString("createDate"));
 			m.put("goodsTitle", rs.getString("goodsTitle"));
 			m.put("goodsPrice", rs.getInt("goodsPrice"));
+			m.put("fileName", rs.getString("fileName"));
 			
 			list.add(m);
 		}
@@ -67,7 +68,7 @@ public class OrdersDAO {
 		String sql = null;
 		sql = "select o.orders_no ordersNo, o.goods_no goodsNo, o.mail mail, o.total_amount totalAmount, o.total_price totalPrice, "
 				+ "o.address address, o.state state, o.update_date updateDate, o.create_date createDate, "
-				+ "g.goods_title goodsTitle, g.category category, g.goods_price goodsPrice "
+				+ "g.goods_title goodsTitle, g.category category, g.goods_price goodsPrice, g.file_name fileName "
 				+ "from orders o inner join goods g "
 				+ " on o.goods_no = g.goods_no "
 				+ "order by o.orders_no desc "
@@ -94,6 +95,7 @@ public class OrdersDAO {
 			m.put("createDate", rs.getString("createDate"));
 			m.put("goodsTitle", rs.getString("goodsTitle"));
 			m.put("goodsPrice", rs.getInt("goodsPrice"));
+			m.put("fileName", rs.getString("fileName"));
 			
 			list.add(m);
 		}

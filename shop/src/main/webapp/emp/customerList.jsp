@@ -58,45 +58,52 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-		<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
+	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<h1>사원목록</h1>
-	
-	<div>
-		<form method="get" action="/shop/emp/customerList.jsp">
-			<input type="text" name="customerMail" placeholder="이메일" value="<%=paramCustomerMail%>">
-			<button type="submit">검색</button>
-		</form>
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col"></div>
+			<div class="col-5">
+				<div>
+					<h1>고객 리스트</h1>
+				</div>
+				<div>
+					<form method="get" action="/shop/emp/customerList.jsp">
+						<input type="text" name="customerMail" placeholder="이메일" value="<%=paramCustomerMail%>">
+						<button type="submit">검색</button>
+					</form>
+				</div>
+				<div>
+					<a href="/shop/emp/customerList.jsp?order=mail&customerMail=<%=paramCustomerMail%>">이메일</a>
+					<a href="/shop/emp/customerList.jsp?order=name&customerMail=<%=paramCustomerMail%>">이름</a>
+					<a href="/shop/emp/customerList.jsp?order=gender&customerMail=<%=paramCustomerMail%>">성별</a>
+					<a href="/shop/emp/customerList.jsp?order=birth&customerMail=<%=paramCustomerMail%>">생일</a>
+				</div>
+				
+				<table class="table">
+					<tr>
+						<th>Mail</th>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Birth</th>
+					</tr>
+					<%
+						for(HashMap<String, Object> m : list){
+					%>
+							<tr>
+								<td><%=(String)(m.get("customerMail")) %></td>
+								<td><%=(String)(m.get("customerName")) %></td>
+								<td><%=(String)(m.get("gender")) %></td>
+								<td><%=(String)(m.get("birth")) %></td>
+							</tr>
+					<%
+						}
+					%>
+				</table>
+			</div>
+			<div class="col"></div>
+		</div>
 	</div>
-	
-	<div>
-		<a href="/shop/emp/customerList.jsp?order=mail&customerMail=<%=paramCustomerMail%>">이메일</a>
-		<a href="/shop/emp/customerList.jsp?order=name&customerMail=<%=paramCustomerMail%>">이름</a>
-		<a href="/shop/emp/customerList.jsp?order=gender&customerMail=<%=paramCustomerMail%>">성별</a>
-		<a href="/shop/emp/customerList.jsp?order=birth&customerMail=<%=paramCustomerMail%>">생일</a>
-	</div>
-	
-	<table>
-		<tr>
-			<th>Mail</th>
-			<th>Name</th>
-			<th>Gender</th>
-			<th>Birth</th>
-		</tr>
-		<%
-			for(HashMap<String, Object> m : list){
-		%>
-				<tr>
-					<td><%=(String)(m.get("customerMail")) %></td>
-					<td><%=(String)(m.get("customerName")) %></td>
-					<td><%=(String)(m.get("gender")) %></td>
-					<td><%=(String)(m.get("birth")) %></td>
-				</tr>
-		<%
-			}
-		%>
-	</table>
-	
 	<%
 		if(currentPage > 1){
 	%>

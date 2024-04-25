@@ -32,46 +32,83 @@
 <body>
 	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	
-	<div>
-		<div>
-			<img src="../upload/<%=(String)(goods.get("filename")) %>" width="300px" height="300px">
-		</div>
-		<div>
-			<div>
-				상품 이름 : <%=(String)(goods.get("goodsTitle")) %>
-			</div>
-			<div>
-				상품 가격 : <%=(Integer)(goods.get("goodsPrice")) %>
-			</div>
-			<div>
-				상품 내용 : <%=(String)(goods.get("goodsContent")) %>
-			</div>
-		</div>
-	</div>
-	
-	<div>
-		<form method="post" action="/shop/customer/addOrders.jsp?">
-			수량 <input type="number" name="amount">
-			주소 <input type="text" name="address">
-			<input type="hidden" name="goodsPrice" value="<%=(Integer)(goods.get("goodsPrice")) %>">
-			<input type="hidden" name="goodsNo" value="<%=goodsNo%>">
-
-			<button type="submit">주문</button>
-		</form>
-	</div>
-	
-	<div>
-		<div>상품후기</div>
-		<%
-			for(HashMap m : reviewList){
-		%>
-				<div>
-					<div><%=m.get("score") %></div>
-					<div><%=m.get("content") %></div>
+	<section class="py-5">
+    	<div class="container px-4 px-lg-5 mt-5">
+    		<div class="row justify-content-center">
+				<div class="col"></div>
+				<div class="col-8">
+					<div class="row">
+						<div class="col">
+							<div>
+								<img src="../upload/<%=(String)(goods.get("filename")) %>" width="400px" height="400px">
+							</div>
+						</div>
+						<div class="col">
+							<div>
+								<table class="table">
+									<tr>
+										<td>상품 이름</td>
+										<td><%=(String)(goods.get("goodsTitle")) %></td>
+									</tr>
+									<tr>
+										<td>상품 가격</td>
+										<td><%=(Integer)(goods.get("goodsPrice")) %></td>
+									</tr>
+									<tr>
+										<td>상품 내용 :</td>
+										<td><%=(String)(goods.get("goodsContent")) %></td>
+									</tr>
+								</table>
+							</div>
+							<div>
+								<form method="post" action="/shop/customer/addOrders.jsp?">
+									<div class="ms-5 mb-3 mt-3 w-75">
+								    	수량  <input type="text" class="form-control" name="amount">
+								  	</div>
+								  	<div class="ms-5 mb-3 w-75">
+								    	<label class="form-label">주소</label>
+								    	<input type="text" class="form-control" name="address">
+								  	</div>
+									<input type="hidden" name="goodsPrice" value="<%=(Integer)(goods.get("goodsPrice")) %>">
+									<input type="hidden" name="goodsNo" value="<%=goodsNo%>">
+									<button type="submit">주문</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div>상품후기</div>
+						<%
+							for(HashMap m : reviewList){
+						%>
+								<div>
+									<div>
+						<%
+										for(int i = 0; i < (Integer)(m.get("score") ); i++){
+						%>
+											&#11088;
+						<%	
+										}
+						%>	
+									</div>
+									<div><%=m.get("content") %></div>
+								</div>
+						<%
+							}
+						%>
+					</div>
 				</div>
-		<%
-			}
-		%>
+				<div class="col"></div>
+			</div>
+   		</div>
+	</section>
+	
+	<div>
+		
+		
 	</div>
+	
+	
+	
 </body>
 </html>

@@ -21,7 +21,7 @@
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
 	System.out.println(currentPage + "<-- goodsList currentPage");
-	int rowPerPage = 10;
+	int rowPerPage = 12;
 	int startRow = (currentPage - 1) * 10;
 	
 	String category = request.getParameter("category");
@@ -79,76 +79,97 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<div>
-		<form method="get" action="/shop/emp/goodsList.jsp">
-			<input type="text" name="goodsTitle" placeholder="상품 이름" value="<%=goodsTitle %>">
-			<button type="submit">검색</button>
-		</form>
-	</div>
+	<section class="py-5">
+    	<div class="container px-4 px-lg-5 mt-3">
+	    	<div>
+				<form method="get" action="/emp/goodsList.jsp">
+					<input type="text" name="goodsTitle" placeholder="상품 이름" value="<%=goodsTitle %>">
+					<button type="submit">검색</button>
+				</form>
+			</div>
+			
+			<div>
+				<a href="/shop/emp/addGoodsForm.jsp">상품 등록</a>
+			</div>
+			
+			<div>
+				<a href="/shop/emp/goodsList.jsp?order=<%=order %>&goodsTitle=<%=goodsTitle %>">전체</a>
+				<%
+					for(HashMap m : categoryList) {
+				%>
+						<a href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category")) %>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">
+							<%=(String)(m.get("category")) %>
+							(<%=(Integer)(m.get("cnt")) %>)
+						</a>
+				<%
+					}
+				%>
+			</div>
+		
+			<div>
+				<a href="/shop/emp/goodsList.jsp?order=goods_title&category=<%=category%>&goodsTitle=<%=goodsTitle %>">이름순</a>
+				<a href="/shop/emp/goodsList.jsp?order=goods_price&category=<%=category%>&goodsTitle=<%=goodsTitle %>">가격순</a>
+				<a href="/shop/emp/goodsList.jsp?order=create_date&category=<%=category%>&goodsTitle=<%=goodsTitle %>">최신순</a>
+			</div>
+    		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+				<%
+					for(HashMap m : goodsList) {
+				%>
+						<div class="col mb-5">
+							<div class="card h-100">
+		                            <!-- Product image-->
+		                            <a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+		                            	<img class="card-img-top img-fluid" src="../upload/<%=(String)(m.get("filename")) %>">
+		                           	</a>
+		                            <!-- Product details-->
+		                            <div class="card-body p-4">
+		                                <div class="text-center">
+		                                    <!-- Product name-->
+		                                    <h5 class="fw-bolder">
+		                                    	<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
+													<%=(String)(m.get("goodsTitle")) %>
+												</a>
+											</h5>
+		                                    <!-- Product price-->
+		                                    <p><%=(Integer)(m.get("goodsPrice")) %></p>
+		                                </div>
+		                            </div>
+							</div>
+						</div>
+				<%
+					}
+				%>
+			</div>
+		</div>
+	</section>
 	
 	<div>
-		<a href="/shop/emp/addGoodsForm.jsp">상품등록</a>
-	</div>
-	
-	<div>
-		<a href="/shop/emp/goodsList.jsp?order=<%=order %>&goodsTitle=<%=goodsTitle %>">전체</a>
-		<%
-			for(HashMap m : categoryList) {
-		%>
-				<a href="/shop/emp/goodsList.jsp?category=<%=(String)(m.get("category")) %>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">
-					<%=(String)(m.get("category")) %>
-					(<%=(Integer)(m.get("cnt")) %>)
-				</a>
-		<%
-			}
-		%>
-	</div>
-	
-	<div>
-		<a href="/shop/emp/goodsList.jsp?order=goods_title&category=<%=category%>&goodsTitle=<%=goodsTitle %>">이름순</a>
-		<a href="/shop/emp/goodsList.jsp?order=goods_price&category=<%=category%>&goodsTitle=<%=goodsTitle %>">가격순</a>
-		<a href="/shop/emp/goodsList.jsp?order=create_date&category=<%=category%>&goodsTitle=<%=goodsTitle %>">최신순</a>
-	</div>
-	
-	<div>
-		<ul class="goodsList">
+		<ul class="mb-4 pagination justify-content-center">
 			<%
-				for(HashMap m : goodsList) {
+				if(currentPage > 1){
 			%>
-					<li class="goods">
-						<div class="goodsImg">
-							<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-								<img src="../upload/<%=(String)(m.get("filename")) %>">
-							</a>
-						</div>
-						<div class="goodsInfo">
-							<a href="/shop/emp/goodsOne.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">
-								<%=(String)(m.get("goodsTitle")) %>
-							</a>
-							<p><%=(Integer)(m.get("goodsPrice")) %></p>
-						</div>
-					</li>
+					<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a></li>
+				  	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a></li>
+			<%
+				}else {
+			%>
+					<li class="page-item disabled"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a></li>
+				  	<li class="page-item disabled"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a></li>		
+			<%
+				}
+				if(currentPage < lastPage){
+			%>
+			  		<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a></li>
+				  	<li class="page-item"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a></li>
+			<%
+				} else { 
+			%>
+					<li class="page-item disabled"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a></li>
+				  	<li class="page-item disabled"><a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a></li>
 			<%
 				}
 			%>
 		</ul>
-	</div>
-	
-	<div>
-		<%
-			if(currentPage > 1){
-		%>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
-		<%
-			}
-			if(currentPage < lastPage){
-		%>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a>
-		<%
-			} 
-		%>
 	</div>
 </body>
 </html>

@@ -45,35 +45,51 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<h1>회원가입</h1>
+	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	
-	<form method="post" action="/shop/customer/checkMailAction.jsp">
-		<div>
-			EmailCheck : <input type="email" name="customerEmail" value="<%=checkEmail %>">
-			<button type="submit">확인</button>
+	<div class="container" >
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-4 mt-5">
+				<h1 style="text-align: center">회원가입</h1>
+				<form method="post" action="/shop/customer/checkMailAction.jsp">
+					<div class="mb-3 mt-3">
+						EmailCheck <input type="email" class="form-control" name="customerEmail" value="<%=checkEmail %>">
+						<button type="submit" class="btn mt-2" style="background-color: #A3C6C4">확인</button>
+					</div>
+					<div>
+						<p><%=checkMsg %></p>
+					</div>
+				</form>
+				<form method="post" action="/shop/customer/addCustomerAction.jsp" >
+					<div class="mb-3 mt-3">
+					    <label class="form-label">Email</label>
+					    <input type="text" class="form-control" name="customerEmail" value="<%=checkedEmail %>">
+				  	</div>
+				  	
+				  	<div class="mb-3">
+				    	<label class="form-label">Pw</label>
+					    <input type="password" class="form-control" name="customerPw">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">Name</label>
+					    <input type="text" class="form-control" name="customerName">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">Birth</label>
+					    <input type="date" class="form-control" name="birth">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">Gender</label>
+						<input type="radio" name="gender" value="남">남
+						<input type="radio" name="gender" value="여">여
+				  	</div>
+				  	
+				  	<button type="submit" class="w-100 btn" style="background-color: #A3C6C4">가입</button>
+			  	</form>
+			</div>
+			<div class="col"></div>
 		</div>
-		<div>
-			<p><%=checkMsg %></p>
-		</div>
-	</form>
-	<form method="post" action="/shop/customer/addCustomerAction.jsp">
-		<div>
-			Email : <input type="email" name="customerEmail" value="<%=checkedEmail %>">
-		</div>
-		<div>
-			Pw : <input type="password" name="customerPw">
-		</div>
-		<div>
-			name : <input type="text" name="customerName">
-		</div>
-		<div>
-			birth : <input type="date" name="birth">
-		</div>
-		<div>
-			gender : <input type="radio" name="gender" value="남">남
-			<input type="radio" name="gender" value="여">여
-		</div>
-		<button type="submit">회원가입</button>
-	</form>
+	</div>
 </body>
 </html>

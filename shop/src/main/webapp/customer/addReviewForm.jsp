@@ -25,7 +25,7 @@
 	<form method="post" action="addReviewAction.jsp">
 		<input type="hidden" name="ordersNo" value="<%=ordersNo %>">
 		<div>
-			점수 : <input type="number" name="score" max="10">
+			점수 : <input type="number" name="score" max="5">
 		</div>
 		<div>
 			리뷰 :<textarea rows="5" cols="30" name="content"></textarea>

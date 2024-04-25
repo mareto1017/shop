@@ -13,11 +13,18 @@
              <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                  <li class="nav-item"><a class="nav-link" href="/shop/customer/goodsList.jsp"">Goods</a></li>
                  <li class="nav-item"><a class="nav-link" href="/shop/customer/ordersList.jsp">OrderList</a></li>
-                 <li class="nav-item"><a class="nav-link" href="/shop/customer/ordersList.jsp">My Info</a></li>
+                 <li class="nav-item"><a class="nav-link" href="/shop/customer/customerOne.jsp">My Info</a></li>
              </ul>
-             <span class="d-flex">
-             	<a href="/shop/customer/logout.jsp" class="btn btn-outline-dark">Logout</a>
-             </span>
+             
+             <%
+             	if(loginCustomer != null){
+             %>
+	             <span class="d-flex">
+	             	<a href="/shop/customer/logout.jsp" class="btn btn-outline-dark">Logout</a>
+	             </span>
+             <%
+             	}
+             %>
          </div>
      </div>
  </nav>

@@ -151,20 +151,32 @@
 	</section>
 	
 	<div>
-		<%
-			if(currentPage > 1){
-		%>
-				  	<a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a>
-				  	<a class="page-link" href="/shop/emp/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a>
-		<%
-			}
-			if(currentPage < lastPage){
-		%>
-				  	<a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a>
-				  	<a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a>
-		<%
-			} 
-		%>
+		<ul class="mb-4 pagination justify-content-center">
+			<%
+				if(currentPage > 1){
+			%>
+					<li class="page-item"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a></li>
+				  	<li class="page-item"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a></li>
+			<%
+				}else {
+			%>
+					<li class="page-item disabled"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=1&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">처음</a></li>
+				  	<li class="page-item disabled"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=currentPage - 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">이전</a></li>		
+			<%
+				}
+				if(currentPage < lastPage){
+			%>
+			  		<li class="page-item"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a></li>
+				  	<li class="page-item"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a></li>
+			<%
+				} else { 
+			%>
+					<li class="page-item disabled"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=currentPage + 1 %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">다음</a></li>
+				  	<li class="page-item disabled"><a class="page-link" href="/shop/customer/goodsList.jsp?currentPage=<%=lastPage %>&category=<%=category%>&order=<%=order %>&goodsTitle=<%=goodsTitle %>">마지막</a></li>
+			<%
+				}
+			%>
+		</ul>
 	</div>
 </body>
 </html>

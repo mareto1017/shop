@@ -36,29 +36,38 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<div>카테고리 리스트</div>
-	<form method="get" action="/shop/emp/categoryList.jsp">
-		<input type="text" name="category" placeholder="카테고리" value="<%=category %>">
-		<button type="submit">검색</button>
-	</form>
-	<table>
-		<tr>
-			<th>카테고리</th>
-			<th>생성 날짜</th>
-		</tr>
-		<%
-			for(HashMap<String, String> m : categoryList){
-		%>
-				<tr>
-					<td><%=m.get("category") %></td>
-					<td><%=m.get("createDate") %></td>
-				</tr>
-		<%
-			}
-		%>
-	</table>
-	
-	<div><a href="/shop/emp/addCategoryForm.jsp">카테고리 추가</a></div>
-
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col"></div>
+			<div class="col-5">
+				<div>
+					<h1>카테고리 리스트</h1>
+				</div>
+				<form method="get" action="/shop/emp/categoryList.jsp">
+					<input type="text" name="category" placeholder="카테고리" value="<%=category %>">
+					<button type="submit">검색</button>
+				</form>
+				<table class="table">
+					<tr>
+						<th>카테고리</th>
+						<th>생성 날짜</th>
+					</tr>
+					<%
+						for(HashMap<String, String> m : categoryList){
+					%>
+							<tr>
+								<td><%=m.get("category") %></td>
+								<td><%=m.get("createDate") %></td>
+							</tr>
+					<%
+						}
+					%>
+				</table>
+				
+				<div><a href="/shop/emp/addCategoryForm.jsp">카테고리 추가</a></div>
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
 </body>
 </html>

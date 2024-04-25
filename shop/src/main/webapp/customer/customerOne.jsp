@@ -24,27 +24,46 @@
 </head>
 <body>
 	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
-	<div>
-		Email : <%=loginCustomer.get("customerEmail")%>
-	</div>
-	<form method="post" action="/shop/customer/modifyCustomerPw.jsp">
-		<input type="hidden" name="customerEmail" value="<%=loginCustomer.get("customerEmail") %>">
-		<div>
-			Pw : <input type="password" name="oldPw">
+	
+	<div class="container">
+		<div class="row justify-content-center mt-5">
+			<div class="col"></div>
+			<div class="col-8">
+				<form method="post" action="/shop/customer/modifyCustomerPw.jsp">
+					<input type="hidden" name="customerEmail" value="<%=loginCustomer.get("customerEmail") %>">
+					<table class="table">
+						<tr>
+							<td>Email</td>
+							<td><%=loginCustomer.get("customerEmail")%></td>
+						</tr>
+						<tr>
+							<td>Pw</td>
+							<td><input type="password" name="oldPw"></td>	
+						</tr>
+						<tr>
+							<td>new Pw</td>
+							<td>
+								<input type="password" name="newPw">
+								<button type="submit">비밀번호 변경</button>
+							</td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td><%=loginCustomer.get("customerName")%></td>
+						</tr>
+						<tr>
+							<td>Gender</td>
+							<td><%=loginCustomer.get("gender")%></td>
+						</tr>
+						<tr>
+							<td>Birth</td>
+							<td><%=loginCustomer.get("birth")%></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="col"></div>
 		</div>
-		<div>
-			new Pw : <input type="password" name="newPw">
-		</div>
-		<button type="submit">비밀번호 변경</button>
-	</form>
-	<div>
-		Name : <%=loginCustomer.get("customerName")%>
-	</div>
-	<div>
-		Gender : <%=loginCustomer.get("gender")%>
-	</div>
-	<div>
-		Birth : <%=loginCustomer.get("birth")%>
 	</div>
 </body>
 </html>

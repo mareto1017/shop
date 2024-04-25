@@ -49,48 +49,58 @@
 <body>
 	<jsp:include page="/customer/inc/customerMenu.jsp"></jsp:include>
 	
-	<h1>주문 내역</h1>
-	<table border="1">
-		<tr>
-			<td>상품 이름</td>
-			<td>상품 갯수</td>
-			<td>배송 주소</td>
-			<td>총 가격</td>
-			<td>주문 날짜</td>
-			<td>주문 상태</td>
-		</tr>
-		<%
-			for(HashMap<String, Object> m : ordersList){
-				boolean write = ReviewDAO.selectReview((Integer)(m.get("ordersNo")));
-		%>
-				<tr>
-					<td><%=(String)(m.get("goodsTitle")) %></td>
-					<td><%=(Integer)(m.get("totalAmount")) %></td>
-					<td><%=(String)(m.get("address")) %></td>
-					<td><%=(Integer)(m.get("totalPrice")) %></td>
-					<td><%=(String)(m.get("createDate")) %></td>
-					<td><%=(String)(m.get("state")) %></td>
-					<td>
-		<%
-					if(((String)(m.get("state"))).equals("배송완료") && write == true){
-		%>
-						<a href="/shop/customer/addReviewForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>">리뷰 작성</a>
-		<%
-					} else if(((String)(m.get("state"))).equals("접수")){
-		%>
-						<a href="/shop/customer/deleteOrders.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>&amount=<%=(Integer)(m.get("totalAmount")) %>&goodsNo=<%=(Integer)(m.get("goodsNo")) %>">주문 취소</a>
-		<%
-					} else if(((String)(m.get("state"))).equals("배송완료") && write == false){
-		%>
-						<div><a href="/shop/customer/deleteReview.jsp?ordersNo=<%=m.get("ordersNo")%>">리뷰 삭제</a></div>
-		<%
-					}
-		%>
-					</td>
-
-		<%
-			}
-		%>
-	</table>
+	<div class="container">
+		<div class="row justify-content-left mt-5">
+			<div class="col"></div>
+			<div class="col-10">
+				<h1>주문 내역</h1>
+				<table class="table">
+					<tr>
+						<td>상품 사진</td>
+						<td>상품 이름</td>
+						<td>상품 갯수</td>
+						<td>배송 주소</td>
+						<td>총 가격</td>
+						<td>주문 날짜</td>
+						<td>주문 상태</td>
+					</tr>
+					<%
+						for(HashMap<String, Object> m : ordersList){
+							boolean write = ReviewDAO.selectReview((Integer)(m.get("ordersNo")));
+					%>
+							<tr>
+								<td><img class="card-img-top img-fluid" src="../upload/<%=(String)(m.get("fileName")) %>" style="width:100px; height:100px"></td>				
+								<td><%=(String)(m.get("goodsTitle")) %></td>
+								<td><%=(Integer)(m.get("totalAmount")) %></td>
+								<td><%=(String)(m.get("address")) %></td>
+								<td><%=(Integer)(m.get("totalPrice")) %></td>
+								<td><%=(String)(m.get("createDate")) %></td>
+								<td><%=(String)(m.get("state")) %></td>
+								<td>
+					<%
+								if(((String)(m.get("state"))).equals("배송완료") && write == true){
+					%>
+									<a href="/shop/customer/addReviewForm.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>">리뷰 작성</a>
+					<%
+								} else if(((String)(m.get("state"))).equals("접수")){
+					%>
+									<a href="/shop/customer/deleteOrders.jsp?ordersNo=<%=(Integer)(m.get("ordersNo")) %>&amount=<%=(Integer)(m.get("totalAmount")) %>&goodsNo=<%=(Integer)(m.get("goodsNo")) %>">주문 취소</a>
+					<%
+								} else if(((String)(m.get("state"))).equals("배송완료") && write == false){
+					%>
+									<div><a href="/shop/customer/deleteReview.jsp?ordersNo=<%=m.get("ordersNo")%>">리뷰 삭제</a></div>
+					<%
+								}
+					%>
+								</td>
+			
+					<%
+						}
+					%>
+				</table>
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
 </body>
 </html>

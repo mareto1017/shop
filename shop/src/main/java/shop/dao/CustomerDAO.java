@@ -108,7 +108,7 @@ public class CustomerDAO {
 	// 파라미터로 mail, oldPw, newPw
 	// mail과 oldPw(pw) 같은 customer의 pw를 newPw로 변경, 성공시 1, 실패시 0 반환(int)
 	public static int updateCustomerPw(String mail, String oldPw, String newPw) throws Exception{
-		String sql = "update customer set pw = password(?) update_date = now() where mail = ? and pw = password(?)";
+		String sql = "update customer set pw = password(?), update_date = now() where mail = ? and pw = password(?)";
 		
 		Connection conn = DBHelper.getConnection();
 		PreparedStatement stmt = null;

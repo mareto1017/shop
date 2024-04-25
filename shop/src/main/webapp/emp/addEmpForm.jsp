@@ -20,31 +20,41 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<h1>Emp 회원 가입</h1>
-	
-	<form method="post" action="/shop/emp/addEmpAction.jsp">
-		<div>
-			Id :
-			<input type="text" name="empId">
-		</div>		
-		<div>
-			Pw :
-			<input type="password" name="empPw">
+	<div class="container" >
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-4 mt-5">
+				<h1 style="text-align: center">회원가입</h1>
+				<form method="post" action="/shop/emp/addEmpAction.jsp" >
+					<div class="mb-3 mt-3">
+					    <label class="form-label">Id</label>
+					    <input type="text" class="form-control" name="empId">
+				  	</div>
+				  	
+				  	<div class="mb-3">
+				    	<label class="form-label">Pw</label>
+					    <input type="password" class="form-control" name="empPw">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">Name</label>
+					    <input type="text" class="form-control" name="empName">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">Job</label>
+					    <input type="text" class="form-control" name="empJob">
+				  	</div>
+				  	<div class="mb-3">
+				    	<label class="form-label">HireDate</label>
+					    <input type="text" class="form-control" name="hireDate">
+				  	</div>
+				  	
+				  	<button type="submit" class="w-100 btn" style="background-color: #A3C6C4">가입</button>
+			  	</form>
+			</div>
+			<div class="col"></div>
 		</div>
-		<div>
-			Name :
-			<input type="text" name="empName">
-		</div>	
-		<div>
-			Job :
-			<input type="text" name="empJob">
-		</div>	
-		<div>
-			HireDate :
-			<input type="date" name="hireDate">
-		</div>	
-		<button type="submit">회원가입</button>
-	</form>
+	</div>
 </body>
 </html>
