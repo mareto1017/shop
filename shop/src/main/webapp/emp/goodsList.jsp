@@ -131,7 +131,7 @@
 												</a>
 											</h5>
 		                                    <!-- Product price-->
-		                                    <p><%=(Integer)(m.get("goodsPrice")) %></p>
+		                                    <p><%=(Integer)(m.get("goodsPrice")) %>원</p>
 		                                </div>
 		                            </div>
 							</div>

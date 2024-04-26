@@ -16,7 +16,7 @@
 	
 %>
 <%
-	ArrayList<String> categoryList = GoodsDAO.selcetCategoryList();
+	ArrayList<HashMap<String, String>> categoryList = CategoryDAO.selectCategoryList();
 
 	System.out.println(categoryList);
 
@@ -41,52 +41,58 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<h1>상품 등록</h1>
 	
-	<form method="post" action="/shop/emp/modifyGoodsAction.jsp" enctype="multipart/form-data">
-		<input type="hidden" name="goodsNo" value='<%=(Integer)(m.get("goodsNo"))%>'>
-		<div>
-			category :
-			<select name="category">
-				<option value="">선택</option>
-				<%
-					for(String c : categoryList) {
-						if(c.equals((String)(m.get("category")))){
-				%>
-							<option value="<%=c%>" selected><%=c%></option>
-				<%
-						} else {
-				%>
-							<option value="<%=c%>"><%=c%></option>
-				<%			
-						}
-					}
-				%>
-			</select>
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div class="mt-5 col-6 bg-white rounded" style="height: 450px">
+				<h1 class="text-center mt-4">상품 수정</h1>
+				<form method="post" action="/shop/emp/modifyGoodsAction.jsp" enctype="multipart/form-data">
+					<div class="ms-5 mb-3 mt-3 w-75">
+						category :
+						<select name="category">
+							<option value="">선택</option>
+							<%
+								for(HashMap cm : categoryList) {
+									if(cm.get("category").equals((String)(m.get("category")))){
+							%>
+										<option value="<%=cm.get("category")%>" selected><%=cm.get("category")%></option>
+							<%
+									} else {
+							%>
+										<option value="<%=cm.get("category")%>"><%=cm.get("category")%></option>
+							<%			
+									}
+								}
+							%>
+						</select>
+					</div>
+					<input type="hidden" name="goodsNo" value='<%=(Integer)(m.get("goodsNo"))%>'>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsTitle</label>
+				    	<input type="text" class="form-control" name="goodsTitle" value='<%=(String)(m.get("goodsTitle"))%>'>
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsImage</label>
+				    	<input type="file" class="form-control" name="goodsImage">
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsPrice</label>
+				    	<input type="number" class="form-control" name="goodsPrice" value='<%=(Integer)(m.get("goodsPrice"))%>'>
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsAmount</label>
+				    	<input type="number" class="form-control" name="goodsAmount" value='<%=(Integer)(m.get("goodsAmount")) %>'>
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsContent</label>
+				    	<textarea rows="5" cols="50" class="form-control" name="goodsContent"><%=(String)(m.get("goodsContent")) %></textarea>
+				  	</div>
+					<button type="submit" class="ms-5 mt-3 w-75 btn" style="background-color: #A3C6C4">상품 수정</button>
+				</form>
+			</div>
+			<div class="col"></div>
 		</div>
-		<div>
-			goodsTitle :
-			<input type="text" name="goodsTitle" value='<%=(String)(m.get("goodsTitle"))%>'>
-		</div>
-		
-		<div>
-			goodsImage :
-			<input type="file" name="goodsImage" value='<%=(String)(m.get("filename")) %>'>
-		</div>
-		
-		<div>
-			goodsPrice :
-			<input type="number" name="goodsPrice" value='<%=(Integer)(m.get("goodsPrice"))%>'>
-		</div>
-		<div>
-			goodsAmount :
-			<input type="number" name="goodsAmount" value='<%=(Integer)(m.get("goodsAmount")) %>'>
-		</div>
-		<div>
-			goodsContent :
-			<textarea row="5" col="50" name="goodsContent"><%=(String)(m.get("goodsContent")) %></textarea>
-		</div>
-		<button type="submit">상품 수정</button>
-	</form>
+	</div>
 </body>
 </html>

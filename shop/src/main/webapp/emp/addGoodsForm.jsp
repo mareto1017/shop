@@ -1,3 +1,4 @@
+<%@page import="shop.dao.CategoryDAO"%>
 <%@page import="shop.dao.GoodsDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,7 +16,7 @@
 	
 %>
 <%
-	ArrayList<String> categoryList = GoodsDAO.selcetCategoryList();
+	ArrayList<HashMap<String, String>> categoryList = CategoryDAO.selectCategoryList();
 	
 	System.out.println(categoryList);
 %>
@@ -32,45 +33,50 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<h1>상품 등록</h1>
-	
-	<form method="post" action="/shop/emp/addGoodsAction.jsp" enctype="multipart/form-data">
-		<div>
-			category :
-			<select name="category">
-				<option value="">선택</option>
-				<%
-					for(String c : categoryList) {
-				%>
-						<option value="<%=c%>"><%=c%></option>
-				<%		
-					}
-				%>
-			</select>
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div class="mt-5 col-6 bg-white rounded" style="height: 450px">
+				<h1 class="text-center mt-4">상품 등록</h1>
+				<form method="post" action="/shop/emp/addGoodsAction.jsp" enctype="multipart/form-data">
+					<div class="ms-5 mb-3 mt-3 w-75">
+						category :
+						<select name="category">
+							<option value="">선택</option>
+							<%
+								for(HashMap m : categoryList) {
+							%>
+									<option value="<%=m.get("category")%>"><%=m.get("category")%></option>
+							<%		
+								}
+							%>
+						</select>
+					</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsTitle</label>
+				    	<input type="text" class="form-control" name="goodsTitle">
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsImage</label>
+				    	<input type="file" class="form-control" name="goodsImage">
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsPrice</label>
+				    	<input type="number" class="form-control" name="goodsPrice">
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsAmount</label>
+				    	<input type="number" class="form-control" name="goodsAmount">
+				  	</div>
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">goodsContent</label>
+				    	<textarea rows="5" cols="50" class="form-control" name="goodsContent"></textarea>
+				  	</div>
+					<button type="submit" class="ms-5 mt-3 w-75 btn" style="background-color: #A3C6C4">상품 등록</button>
+				</form>
+			</div>
+			<div class="col"></div>
 		</div>
-		<div>
-			goodsTitle :
-			<input type="text" name="goodsTitle">
-		</div>
-		
-		<div>
-			goodsImage :
-			<input type="file" name="goodsImage">
-		</div>
-		
-		<div>
-			goodsPrice :
-			<input type="number" name="goodsPrice">
-		</div>
-		<div>
-			goodsAmount :
-			<input type="number" name="goodsAmount">
-		</div>
-		<div>
-			goodsContent :
-			<textarea row="5" col="50" name="goodsContent"></textarea>
-		</div>
-		<button type="submit">상품등록</button>
-	</form>
+	</div>
 </body>
 </html>

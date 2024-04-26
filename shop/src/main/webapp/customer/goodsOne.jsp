@@ -35,7 +35,7 @@
 	<section class="py-5">
     	<div class="container px-4 px-lg-5 mt-5">
     		<div class="row justify-content-center">
-				<div class="col"></div>
+			    <div class="col"></div>
 				<div class="col-8">
 					<div class="row">
 						<div class="col">
@@ -55,7 +55,7 @@
 										<td><%=(Integer)(goods.get("goodsPrice")) %></td>
 									</tr>
 									<tr>
-										<td>상품 내용 :</td>
+										<td>상품 내용 </td>
 										<td><%=(String)(goods.get("goodsContent")) %></td>
 									</tr>
 								</table>
@@ -77,11 +77,12 @@
 						</div>
 					</div>
 					<div>
-						<div>상품후기</div>
+						<div class="mt-3 mb-3"><h3>상품후기</h3></div>
+						<hr>
 						<%
 							for(HashMap m : reviewList){
 						%>
-								<div>
+								<div class="mt-3">
 									<div>
 						<%
 										for(int i = 0; i < (Integer)(m.get("score") ); i++){
@@ -91,7 +92,8 @@
 										}
 						%>	
 									</div>
-									<div><%=m.get("content") %></div>
+									<div class="mt-3"><%=m.get("content") %></div>
+									<hr>
 								</div>
 						<%
 							}
@@ -102,11 +104,6 @@
 			</div>
    		</div>
 	</section>
-	
-	<div>
-		
-		
-	</div>
 	
 	
 	

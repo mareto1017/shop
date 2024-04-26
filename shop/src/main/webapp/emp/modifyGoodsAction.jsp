@@ -18,12 +18,13 @@
 %>
 
 <%
+
 	int goodsNo = Integer.parseInt(request.getParameter("goodsNo"));
 	String category = request.getParameter("category");
 	String goodsTitle = request.getParameter("goodsTitle");
 	Part part = request.getPart("goodsImage");
 	int goodsPrice = Integer.parseInt(request.getParameter("goodsPrice"));
-	int goodsAmount = Integer.parseInt(request.getParameter("goodsNo"));
+	int goodsAmount = Integer.parseInt(request.getParameter("goodsAmount"));
 	String goodsContent = request.getParameter("goodsContent");
 	
 	

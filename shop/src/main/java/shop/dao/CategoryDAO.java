@@ -28,6 +28,26 @@ public class CategoryDAO {
 		return categoryList;
 	}
 	
+	public static ArrayList<HashMap<String, String>> selectCategoryList() throws Exception{
+		String sql = "select category,  create_date createDate from category;";
+		
+		Connection conn = DBHelper.getConnection();
+		PreparedStatement stmt = null;
+		stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		ArrayList<HashMap<String, String>> categoryList = new ArrayList<>();
+		while(rs.next()){
+			HashMap<String, String> m = new HashMap<>();
+			m.put("category", rs.getString("category"));
+			m.put("createDate", rs.getString("createDate"));
+			
+			categoryList.add(m);
+		}
+		
+		return categoryList;
+	}
+	
 	// category 값을 받아서 DB에 입력후, 입력이 되었으면 1, 아니면 0을 반환
 	public static int insertCategory(String category) throws Exception {
 		String sql = "insert into category (category) values (?)";
@@ -43,4 +63,5 @@ public class CategoryDAO {
 		
 		return row;
 	}
+	
 }

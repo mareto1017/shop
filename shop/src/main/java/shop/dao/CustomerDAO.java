@@ -140,7 +140,7 @@ public class CustomerDAO {
 		stmt.setInt(3, rowPerPage);
 		System.out.println(stmt);
 		ResultSet rs = null;
-		rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
 		
 		while(rs.next()){
 			HashMap<String, Object> m = new HashMap<String, Object>();

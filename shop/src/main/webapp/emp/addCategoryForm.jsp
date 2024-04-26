@@ -23,12 +23,23 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<div>카테고리 추가</div>
-	<form method="post" action="/shop/emp/addCategoryAction.jsp">
-		카테고리 : 
-		<input type="text" name="category">
-		<button type="submit">추가</button>
-	</form>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col"></div>
+			<div class="mt-5 col-4 bg-white rounded" style="height: 450px">
+				<h1 class="text-center mt-4">카테고리 추가</h1>
+				<form method="post" action="/shop/emp/addCategoryAction.jsp">
+				  	<div class="ms-5 mb-3 mt-3 w-75">
+				    	<label class="form-label">카테고리</label>
+				    	<input type="text" class="form-control" name="category">
+				  	</div>
+					<button type="submit" class="ms-5 mt-3 w-75 btn" style="background-color: #A3C6C4">추가</button>
+				</form>
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
 
 </body>
 </html>

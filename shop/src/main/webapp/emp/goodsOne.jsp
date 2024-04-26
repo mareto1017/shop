@@ -33,41 +33,44 @@
 <body>
 	<jsp:include page="/emp/inc/empMenu.jsp"></jsp:include>
 	
-	<div>
-		<div>
-			<img src="../upload/<%=(String)(m.get("filename")) %>" width="300px" height="300px">
-		</div>
-		<div>
-			<div>
-				상품 번호 : <%=(Integer)(m.get("goodsNo")) %>
+		<section class="py-5">
+	    	<div class="container px-4 px-lg-5 mt-5">
+	    		<div class="row justify-content-center">
+				    <div class="col"></div>
+					<div class="col-8">
+						<div class="row">
+							<div class="col">
+								<div>
+									<img src="../upload/<%=(String)(m.get("filename")) %>" width="400px" height="400px">
+								</div>
+							</div>
+							<div class="col">
+								<div>
+									<table class="table">
+										<tr>
+											<td>상품 이름</td>
+											<td><%=(String)(m.get("goodsTitle")) %></td>
+										</tr>
+										<tr>
+											<td>상품 가격</td>
+											<td><%=(Integer)(m.get("goodsPrice")) %></td>
+										</tr>
+										<tr>
+											<td>상품 내용 </td>
+											<td><%=(String)(m.get("goodsContent")) %></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div>
+								<a href="/shop/emp/modifyGoodsForm.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>" class="mt-3 w-100 btn" style="background-color: #A3C6C4">수정</a>
+							</div>
+						</div>
+					</div>
+					<div class="col"></div>
 			</div>
-			<div>
-				상품 이름 : <%=(String)(m.get("goodsTitle")) %>
-			</div>
-			<div>
-				등록 사원 : <%=(String)(m.get("empId")) %>
-			</div>
-			<div>
-				상품 가격 : <%=(Integer)(m.get("goodsPrice")) %>
-			</div>
-			<div>
-				상품 재고 : <%=(Integer)(m.get("goodsAmount")) %>
-			</div>
-			<div>
-				상품 내용 : <%=(String)(m.get("goodsContent")) %>
-			</div>
-			<div>
-				상품 수정 일자 : <%=(String)(m.get("updateDate")) %>
-			</div>
-			<div>
-				상품 등록 일자 : <%=(String)(m.get("createDate")) %>
-			</div>
-		</div>
-	</div>
+   		</div>
+	</section>
 	
-	<div>
-		<a href="/shop/emp/modifyGoodsForm.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>">수정</a>
-		<a href="/shop/emp/deleteGoods.jsp?goodsNo=<%=(Integer)(m.get("goodsNo")) %>"">삭제</a>
-	</div>
 </body>
 </html>

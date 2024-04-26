@@ -21,6 +21,7 @@
 	}
 %>
 <%
+	request.setCharacterEncoding("UTF-8");
 
 	HashMap<String, Object> loginEmp = (HashMap<String, Object>)(session.getAttribute("loginEmp"));
 
